@@ -26,10 +26,10 @@ const Line = () => {
   const curve = new THREE.CatmullRomCurve3(vertices);
   const curve2 = new THREE.CatmullRomCurve3(vertices2);
   const geometry = new THREE.BufferGeometry().setFromPoints(
-    curve.getPoints(50)
+    curve.getPoints(100)
   );
   const geometry2 = new THREE.BufferGeometry().setFromPoints(
-    curve2.getPoints(50)
+    curve2.getPoints(100)
   );
   const material = new THREE.LineBasicMaterial({ color: "red", linewidth: 5 });
   const material2 = new THREE.LineBasicMaterial({
@@ -45,20 +45,34 @@ const Line = () => {
     <>
       <OrbitControls />
       <Axis />
-      {vertices.map((vertex) => {
-        <Html>
+      {vertices.map((vertex) => (
+        <Html key={`${vertex.x}, ${vertex.y}, ${vertex.z}`} position={vertex}>
           <p
             style={{
               color: "black",
               fontSize: ".4rem",
               width: "50px",
-              transform: "translate(-25%, -25%)",
+              transform: "translate(-25%, -200%)",
             }}
           >
             ({vertex.x}, {vertex.y}, {vertex.z})
           </p>
-        </Html>;
-      })}
+        </Html>
+      ))}
+      {vertices2.map((vertex) => (
+        <Html key={`${vertex.x}, ${vertex.y}, ${vertex.z}`} position={vertex}>
+          <p
+            style={{
+              color: "black",
+              fontSize: ".4rem",
+              width: "50px",
+              transform: "translate(-25%, -200%)",
+            }}
+          >
+            ({vertex.x}, {vertex.y}, {vertex.z})
+          </p>
+        </Html>
+      ))}
     </>
   );
 };

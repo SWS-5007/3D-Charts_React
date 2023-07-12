@@ -2,20 +2,20 @@ import { Html } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import React from "react";
 import * as THREE from "three";
+import AxisPoints from "./AxisPoints";
 
 const Axis = () => {
   const { scene } = useThree();
+  const axisColors = { x: "#7d0000", y: "#61f75c", z: "#1f5de0" };
 
-  const pointsY = [];
+  const points = [];
 
-  pointsY.push(new THREE.Vector3(0, -50, 0));
-  pointsY.push(new THREE.Vector3(0, 50, 0));
+  points.push(new THREE.Vector3(0, -50, 0));
+  points.push(new THREE.Vector3(0, 50, 0));
 
-  const geometryY = new THREE.BufferGeometry().setFromPoints(pointsY);
-  const material = new THREE.LineBasicMaterial({
-    color: "rgba(255, 255, 255)",
-  });
-  const lineY = new THREE.Line(geometryY, material);
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const material = new THREE.LineBasicMaterial({ color: axisColors.y });
+  const lineY = new THREE.Line(geometry, material);
 
   for (let i = 0; i < 1; i++) {
     const pointsX = [];
@@ -26,9 +26,11 @@ const Axis = () => {
     pointsZ.push(new THREE.Vector3(i, 0, 50));
     pointsZ.push(new THREE.Vector3(i, 0, -50));
     const geometryX = new THREE.BufferGeometry().setFromPoints(pointsX);
+    const materialX = new THREE.LineBasicMaterial({ color: axisColors.x });
     const geometryZ = new THREE.BufferGeometry().setFromPoints(pointsZ);
-    const lineX = new THREE.Line(geometryX, material);
-    const lineZ = new THREE.Line(geometryZ, material);
+    const materialY = new THREE.LineBasicMaterial({ color: axisColors.z });
+    const lineX = new THREE.Line(geometryX, materialX);
+    const lineZ = new THREE.Line(geometryZ, materialY);
     scene.add(lineX);
     scene.add(lineZ);
   }
@@ -36,6 +38,7 @@ const Axis = () => {
   scene.add(lineY);
   return (
     <>
+      <AxisPoints />
       <Html>
         <p
           style={{
