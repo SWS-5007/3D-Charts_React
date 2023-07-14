@@ -3,11 +3,12 @@ import { Canvas } from "@react-three/fiber";
 import Scatter from "./components/Scatter";
 import Line from "./components/Line";
 import Pie from "./components/Pie";
+import ClosedCylinder from "./components/ClosedCylinder";
 
 function App() {
   return (
     <Canvas camera={{ position: [5, 6, 10] }}>
-      <Pie />
+      <Line />
     </Canvas>
   );
 }

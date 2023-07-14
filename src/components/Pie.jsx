@@ -1,100 +1,67 @@
 import { OrbitControls } from "@react-three/drei";
-import React from "react";
+import React, { useState } from "react";
 import * as THREE from "three";
+import { extend } from "@react-three/fiber";
+
+extend(THREE.CylinderGeometry);
 
 const Pie = () => {
-  const geometry = new THREE.CylinderGeometry(
-    2,
-    2,
-    1,
-    60,
-    10,
-    false,
-    0,
-    Math.PI / 2
-  );
-  const geometry2 = new THREE.CylinderGeometry(
-    2,
-    2,
-    1,
-    60,
-    10,
-    false,
-    Math.PI / 2,
-    Math.PI / 6
-  );
-  const geometry3 = new THREE.CylinderGeometry(
-    2,
-    2,
-    1,
-    60,
-    10,
-    false,
-    (2 * Math.PI) / 3,
-    Math.PI / 2
-  );
-  const geometry4 = new THREE.CylinderGeometry(
-    2,
-    2,
-    1,
-    60,
-    10,
-    false,
-    (2 * Math.PI) / 3 + Math.PI / 2,
-    Math.PI / 2
-  );
-  const geometry5 = new THREE.CylinderGeometry(
-    2,
-    2,
-    1,
-    60,
-    10,
-    false,
-    (2 * Math.PI) / 3 + Math.PI,
-    Math.PI / 3
-  );
+  let thetaStart = 0;
+
+  const data = [
+    {
+      value: 10,
+      label: "Football",
+      color: "orange",
+    },
+    {
+      value: 5,
+      label: "Hockey",
+      color: "red",
+    },
+    {
+      value: 10,
+      label: "Cricket",
+      color: "yellow",
+    },
+    {
+      value: 15,
+      label: "Baseball",
+      color: "green",
+    },
+    {
+      value: 20,
+      label: "Badminton",
+      color: "blue",
+    },
+  ];
+
+  const total = data.reduce((a, b) => (a += b.value), 0);
+  console.log(total);
 
   return (
     <>
       <OrbitControls />
       <ambientLight />
       <directionalLight position={(2, 3, 4)} intensity={0.1} />
-      {/* <Axis /> */}
-      <mesh geometry={geometry}>
-        <meshStandardMaterial
-          roughness={0.5}
-          side={THREE.DoubleSide}
-          color="red"
-        />
-      </mesh>
-      <mesh geometry={geometry2}>
-        <meshStandardMaterial
-          roughness={0.5}
-          side={THREE.DoubleSide}
-          color="dodgerblue"
-        />
-      </mesh>
-      <mesh geometry={geometry3}>
-        <meshStandardMaterial
-          roughness={0.5}
-          side={THREE.DoubleSide}
-          color="orange"
-        />
-      </mesh>
-      <mesh geometry={geometry4}>
-        <meshStandardMaterial
-          roughness={0.5}
-          side={THREE.DoubleSide}
-          color="GREEN"
-        />
-      </mesh>
-      <mesh geometry={geometry5}>
-        <meshStandardMaterial
-          roughness={0.5}
-          side={THREE.DoubleSide}
-          color="YELLOW"
-        />
-      </mesh>
+
+      {data.map((pie) => {
+        const theta = (pie.value * 2 * Math.PI) / total;
+        const start = thetaStart;
+        const height = (pie.value / total) * 5;
+        thetaStart += theta;
+
+        return (
+          <>
+            <mesh position-y={height / 2} key={pie.label}>
+              <cylinderGeometry
+                args={[3, 3, height, 20, 20, false, start, theta]}
+              />
+              <meshBasicMaterial color={pie.color} side={THREE.DoubleSide} />
+            </mesh>
+          </>
+        );
+      })}
     </>
   );
 };
