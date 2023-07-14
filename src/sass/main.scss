@@ -1,6 +1,158 @@
 canvas {
-  background-color: #eef1f3;
+  background-color: #ecf0f3;
   width: 100%;
   height: 100%;
   min-height: 100vh;
+}
+
+$fontFamily: "Poppins";
+
+$colorBackground: #ecf0f3;
+$colorDarkest: black;
+$colorDarker: #686868;
+$colorDark: #606060;
+$colorPrimary: dodgerblue;
+$colorLightest: white;
+$colorLighter: #dedede;
+$colorLight: #c1c1c1;
+
+html {
+  font-size: 62.5%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: $fontFamily;
+  letter-spacing: 1.2px;
+}
+
+body {
+  background-color: $colorBackground;
+}
+
+.container {
+  width: 100%;
+  display: block;
+  margin: 4rem auto;
+}
+
+// Typography
+
+h1 {
+  font-size: 3.2rem;
+  color: $colorDarker;
+}
+
+h2 {
+  font-size: 2.4rem;
+  color: $colorDarker;
+}
+
+h3 {
+  font-size: 1.6rem;
+  color: $colorDarker;
+}
+
+p {
+  font-size: 1.2rem;
+  color: $colorDark;
+}
+
+// Links
+
+a {
+  color: $colorDark;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link-primary {
+  color: $colorPrimary;
+}
+
+// Buttons
+
+button {
+  border: none;
+  box-shadow: inset -10px -10px 30px 0 #fff, inset 10px 10px 30px 0 #acbdd8;
+  padding: 0.4rem 1.2rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.btn-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+// Navbar
+
+nav {
+  width: 100%;
+  padding: 1.2rem 1.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $colorLight;
+}
+
+.nav-items {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-item {
+  display: inline-block;
+  margin-left: 2.4rem;
+  font-size: 1.2rem;
+}
+
+// Create New Plot Page
+
+.create-new-plot {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  .grid-plot {
+    margin-top: 6rem;
+  }
+
+  .chart-type {
+    display: flex;
+    gap: 1.4rem;
+    flex-direction: column;
+  }
+
+  .chart-logo {
+    box-shadow: -10px -10px 30px 0 #fff, 10px 10px 30px 0 #acbdd8;
+    padding: 4rem;
+    border-radius: 12px;
+  }
+}
+
+.footer-text {
+  position: absolute;
+  bottom: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-weight: bold;
+}
+
+// Grids
+
+.grid {
+  display: grid;
+}
+
+.grid-1x4 {
+  grid-template: repeat(1, 1fr) / repeat(4, 1fr);
+  gap: 6rem;
 }
