@@ -2,7 +2,7 @@ import React from "react";
 
 const NewChart = () => {
   return (
-    <section className="container container-center">
+    <section className="container">
       <div className="create-new-plot">
         <header>
           <h1>Create New Plot</h1>
