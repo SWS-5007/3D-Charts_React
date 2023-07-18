@@ -26,8 +26,6 @@ const AxisPoints = () => {
     verticesZ[j + 2] = i;
   }
 
-  console.log(verticesX);
-
   const geometryX = new THREE.BufferGeometry();
   geometryX.setAttribute("position", new THREE.BufferAttribute(verticesX, 3));
   const geometryY = new THREE.BufferGeometry();

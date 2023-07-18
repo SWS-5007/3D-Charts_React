@@ -7,15 +7,19 @@ import ClosedCylinder from "./components/ClosedCylinder";
 import Navbar from "./components/Navbar";
 import NewChart from "./components/NewChart";
 import Plots from "./components/Plots";
+import SideBar from "./components/SideBar";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Plots />
-      {/* <Canvas camera={{ position: [5, 6, 10] }}>
-        <Line />
-      </Canvas> */}
+      {/* <Plots /> */}
+      <section class="plot-container">
+        <Canvas camera={{ position: [5, 6, 10] }}>
+          <Line />
+        </Canvas>
+        <SideBar />
+      </section>
     </>
   );
 }

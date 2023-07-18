@@ -1,16 +1,9 @@
-canvas {
-  background-color: #ecf0f3;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-}
-
 $fontFamily: "Poppins";
 
 $colorBackground: #ecf0f3;
 $colorDarkest: black;
 $colorDarker: #686868;
-$colorDark: #606060;
+$colorDark: #707070;
 $colorPrimary: dodgerblue;
 $colorLightest: white;
 $colorLighter: #dedede;
@@ -39,6 +32,13 @@ body {
   max-width: 1080px;
 }
 
+canvas {
+  background-color: #ecf0f3;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
 // Typography
 
 h1 {
@@ -52,12 +52,20 @@ h2 {
 }
 
 h3 {
-  font-size: 1.6rem;
-  color: $colorDarker;
+  font-size: 1.5rem;
+  color: $colorDarkest;
+}
+
+h4 {
+  font-size: 1.3rem;
 }
 
 p {
   font-size: 1.2rem;
+  color: $colorDark;
+}
+
+.text-lighter {
   color: $colorDark;
 }
 
@@ -207,4 +215,42 @@ td:last-child {
   align-items: center;
   flex-direction: column;
   gap: 6rem;
+}
+
+// Sidebars
+.plot-container {
+  display: grid;
+  grid-template: 1fr / 1fr 320px;
+}
+
+aside {
+  width: 100%;
+  border-left: 1px solid $colorLight;
+  padding: 1rem 1.4rem;
+}
+
+.aside-heading {
+  margin-top: 2rem;
+  margin-bottom: 1.8rem;
+}
+
+.plot-setting {
+  margin: 1.4rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-text-container {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.color {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: red;
+  border-radius: 50%;
 }
