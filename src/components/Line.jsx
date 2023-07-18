@@ -43,7 +43,7 @@ const Line = () => {
 
   return (
     <>
-      {/* <OrbitControls /> */}
+      <OrbitControls />
       <Axis />
       {vertices.map((vertex) => (
         <Html key={`${vertex.x}, ${vertex.y}, ${vertex.z}`} position={vertex}>

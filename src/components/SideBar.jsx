@@ -11,7 +11,7 @@ const SideBar = () => {
           <h4 className="text-lighter">Align View</h4>
           <span>Select the axis to align with camera</span>
         </div>
-        <select name="" id=""></select>
+        <select className="input-chart" name="" id=""></select>
       </div>
       <div className="plot-setting">
         <div>
@@ -29,12 +29,19 @@ const SideBar = () => {
       </div>
 
       <h3 className="aside-heading">Chart Settings</h3>
+
       <div className="plot-setting">
         <div>
           <h4 className="text-lighter">Font Size</h4>
           <span>Change font-size of vertices</span>
         </div>
-        <input width={"30px"} type="number" name="" id=""></input>
+        <input
+          className="input-chart"
+          type="number"
+          name=""
+          value={15}
+          id=""
+        ></input>
       </div>
       <div className="plot-setting">
         <div>
@@ -45,12 +52,13 @@ const SideBar = () => {
           <MdEdit />
         </button>
       </div>
+
       <div className="plot-setting">
         <div>
-          <h4 className="text-lighter">Move to</h4>
+          <h4 className="text-lighter">Look at</h4>
           <span>Align the camera to selected vertex</span>
         </div>
-        <input width={"30px"} type="number" name="" id=""></input>
+        <input className="input-chart" value={"5,5,6"} name="" id=""></input>
       </div>
 
       <h3 className="aside-heading">Chart Data</h3>

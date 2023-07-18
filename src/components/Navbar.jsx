@@ -35,7 +35,6 @@ const Navbar = () => {
             <BiPlus />
           </button>
         </li>
-        <li className="nav-item"></li>
       </ul>
     </nav>
   );
