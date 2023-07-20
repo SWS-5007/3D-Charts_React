@@ -12,8 +12,7 @@ html {
 
 body {
   background-color: #ecf0f3;
-  max-height: 100vh;
-  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .container {
@@ -86,6 +85,14 @@ button {
 .btn-primary {
   box-shadow: -10px -10px 30px 0 #fff, 10px 10px 30px 0 #acbdd8;
   padding: 1.8rem 2.2rem;
+}
+
+.btn-dark {
+  background-color: black;
+  border-radius: 5px;
+  box-shadow: none;
+  color: white;
+  padding: 0.8rem 2rem;
 }
 
 nav {
@@ -240,6 +247,85 @@ input {
   max-width: 60px;
   padding: 0.6rem 1.2rem;
   border-radius: 12px;
+}
+
+.input-primary {
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+  max-width: 320px;
+  width: 100%;
+  padding: 0.8rem 2rem;
+  display: block;
+  margin: 1.8rem 0;
+  background-color: transparent;
+}
+
+.input-max {
+  max-width: 100%;
+  width: 100%;
+}
+
+.color-input {
+  max-width: 320px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+}
+.color-input input {
+  border: none;
+  margin: 0;
+  border-left: 1px solid #c1c1c1;
+  border-radius: 0;
+}
+
+.color-container {
+  margin: 13px 1.4rem;
+  width: 12px;
+  height: 12px;
+}
+.color-container .color {
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+form {
+  max-width: 800px;
+  display: block;
+  margin: 4rem auto;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.form-content {
+  margin: 3.6rem 0 4.8rem;
+}
+
+.heading-optional::after {
+  content: "(Optional)";
+  font-size: 0.8rem;
+  position: relative;
+  left: 10px;
+  font-weight: 100;
+  color: rgb(234, 63, 63);
+}
+
+.vertices-data {
+  margin: 4rem 0 6rem;
 }
 
 /*# sourceMappingURL=styles.css.map */

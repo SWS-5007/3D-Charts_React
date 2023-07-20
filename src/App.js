@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import NewChart from "./components/NewChart";
 import PlotContainer from "./components/PlotContainer";
 import Plots from "./components/Plots";
+import FormContainer from "./components/Forms/FormContainer";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Navbar />
 
       <Routes>
+        <Route element={<FormContainer />} path="/plot/new" />
         <Route element={<PlotContainer />} path="/plot" />
         <Route element={<Plots />} path="/plots" />
         <Route element={<NewChart />} path="/" />
