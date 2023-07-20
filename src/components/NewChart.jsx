@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NewChart = () => {
   return (
@@ -10,7 +11,7 @@ const NewChart = () => {
         </header>
 
         <div className="grid grid-1x4 grid-plot">
-          <div className="chart-type">
+          <Link to="/plot/new?type=line" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"
@@ -29,9 +30,9 @@ const NewChart = () => {
               </svg>
             </div>
             <span>Line</span>
-          </div>
+          </Link>
 
-          <div className="chart-type">
+          <Link to="/plot/new?type=pie" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"
@@ -54,9 +55,9 @@ const NewChart = () => {
               </svg>
             </div>
             <span>Pie</span>
-          </div>
+          </Link>
 
-          <div className="chart-type">
+          <Link to="/plot/new?type=bar" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"
@@ -72,9 +73,9 @@ const NewChart = () => {
               </svg>
             </div>
             <span>Bar</span>
-          </div>
+          </Link>
 
-          <div className="chart-type">
+          <Link to="/plot/new?type=scatter" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"
@@ -90,7 +91,7 @@ const NewChart = () => {
               </svg>
             </div>
             <span>Scatter</span>
-          </div>
+          </Link>
         </div>
       </div>
 

@@ -101,6 +101,7 @@ const Line = () => {
           rows={10}
         />
       </div>
+
       <div className="form-content">
         <button className="btn-dark">Add Line</button>
       </div>
