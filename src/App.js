@@ -1,25 +1,22 @@
 import "./styles/styles.css";
-import { Canvas } from "@react-three/fiber";
-import Scatter from "./components/Scatter";
-import Line from "./components/Line";
-import Pie from "./components/Pie";
-import ClosedCylinder from "./components/ClosedCylinder";
+
+import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import NewChart from "./components/NewChart";
+import PlotContainer from "./components/PlotContainer";
 import Plots from "./components/Plots";
-import SideBar from "./components/SideBar";
 
 function App() {
   return (
     <>
       <Navbar />
-      {/* <Plots /> */}
-      <section class="plot-container">
-        <Canvas camera={{ position: [5, 6, 10] }}>
-          <Line />
-        </Canvas>
-        <SideBar />
-      </section>
+
+      <Routes>
+        <Route element={<PlotContainer />} path="/plot" />
+        <Route element={<Plots />} path="/plots" />
+        <Route element={<NewChart />} path="/" />
+      </Routes>
     </>
   );
 }

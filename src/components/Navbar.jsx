@@ -1,10 +1,11 @@
 import React from "react";
 import { BiPlus } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav>
-      <div className="logo-container">
+      <Link to="/" className="logo-container">
         <svg
           width="149"
           height="20"
@@ -24,16 +25,10 @@ const Navbar = () => {
             fill="#606060"
           />
         </svg>
-      </div>
+      </Link>
       <ul className="nav-items">
         <li className="nav-item">
-          <a href="#">Your Graphs</a>
-        </li>
-        <li className="nav-item">
-          <button className="btn-flex">
-            <span>Add</span>
-            <BiPlus />
-          </button>
+          <Link to="/plots">Your Graphs</Link>
         </li>
       </ul>
     </nav>
