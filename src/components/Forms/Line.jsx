@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import useForm from "../../hooks/useForm";
+import Input from "../common/Input";
 
 const Line = () => {
+  const initialData = {
+    plotName: "",
+    description: "",
+    labelsX: "",
+    labelsY: "",
+    labelsZ: "",
+    plots: [{ label: "", color: "", vertices: [] }],
+    vertex: "0, 0, 0",
+    valuesInArray: "",
+  };
+  const [numberOfLines, setNumberOfLines] = useState(1);
+
+  const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
+    useForm(initialData);
+
+  const addMoreLine = () => {
+    const copiedData = { ...data };
+    copiedData.plots.push({ label: "", color: "", vertices: [] });
+    setData(copiedData);
+
+    setNumberOfLines((numberOfLines) => numberOfLines + 1);
+  };
+
   return (
     <form>
       <div className="form-header">
@@ -33,14 +58,16 @@ const Line = () => {
       </div>
 
       <div className="form-content">
-        <input
-          name="plot_name"
+        <Input
+          name="plotName"
           placeholder="Plot Name"
+          onChange={handleChange}
           className="input-primary"
         />
-        <input
+        <Input
           name="description"
           placeholder="Description"
+          onChange={handleChange}
           className="input-primary"
         />
       </div>
@@ -48,62 +75,75 @@ const Line = () => {
       <div className="form-content">
         <h3 className="form-content-heading heading-optional">Labels</h3>
         <span>Separate each label with a comma i.e. “,”</span>
-        <input
-          name="x_labels"
+        <Input
+          name="labelsX"
           placeholder="X-Axis Labels"
+          onChange={handleChange}
           className="input-primary input-max"
         />
-        <input
-          name="y_labels"
+        <Input
+          name="labelsY"
           placeholder="Y-Axis Labels"
+          onChange={handleChange}
           className="input-primary input-max"
         />
-        <input
-          name="z_labels"
+        <Input
+          name="labelsZ"
           placeholder="Z-Axis Labels"
+          onChange={handleChange}
           className="input-primary input-max"
         />
       </div>
 
-      <div className="form-content">
-        <h3 className="form-content-heading">Plot 1</h3>
+      {Array(numberOfLines)
+        .fill(0)
+        .map((value, index) => (
+          <div key={index}>
+            <div className="form-content">
+              <h3 className="form-content-heading">Plot {index + 1}</h3>
 
-        <input name="plot_name" placeholder="Label" className="input-primary" />
+              <Input
+                onChange={(event) => handleArrayChange("plots", index, event)}
+                name="label"
+                placeholder="Label"
+                className="input-primary"
+              />
 
-        <div className="color-input">
-          <div className="color-container">
-            <span className="color" />
+              <div className="color-input">
+                <div className="color-container">
+                  <span
+                    style={{ backgroundColor: data.plots[index].color }}
+                    className="color"
+                  />
+                </div>
+                <Input
+                  onChange={(event) => handleArrayChange("plots", index, event)}
+                  name="color"
+                  placeholder="Color"
+                  type="color"
+                  className="input-primary"
+                />
+              </div>
+            </div>
+
+            <div className="form-content">
+              <h3 className="form-content-heading">Values</h3>
+              <span>Separate each value in a vertex with a comma i.e. “,”</span>
+              <Input
+                onChange={handleChange}
+                name="vertex"
+                placeholder="Vertices (x, y, z)"
+                className="input-primary"
+              />
+              <p className="vertices-data">(1, 2, 2), (2, 4, 2)</p>
+            </div>
           </div>
-          <input name="color" placeholder="Color" className="input-primary" />
-        </div>
-      </div>
+        ))}
 
       <div className="form-content">
-        <h3 className="form-content-heading">Values</h3>
-        <span>Separate each value in a vertex with a comma i.e. “,”</span>
-        <input
-          name="vertices"
-          placeholder="Vertices (x, y, z)"
-          className="input-primary"
-        />
-        <p className="vertices-data">(1, 2, 2), (2, 4, 2)</p>
-      </div>
-
-      <div className="form-content">
-        <h3 className="form-content-heading heading-optional">
-          Values in Array
-        </h3>
-        <span>Paste array of vertex arrays</span>
-        <textarea
-          name="vertices"
-          placeholder="Vertices (x, y, z)"
-          className="input-primary input-max"
-          rows={10}
-        />
-      </div>
-
-      <div className="form-content">
-        <button className="btn-dark">Add Line</button>
+        <button type="button" onClick={addMoreLine} className="btn-dark">
+          Add Line
+        </button>
       </div>
     </form>
   );
