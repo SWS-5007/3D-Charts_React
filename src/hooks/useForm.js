@@ -7,7 +7,6 @@ export default function useForm(initialData, schema) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
     if (schema) {
       const schema = { [name]: schema[name] };
 

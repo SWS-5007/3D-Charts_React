@@ -1,24 +1,21 @@
 import React, { useState } from "react";
-import useForm from "../../hooks/useForm";
+
+import { handleCreateVertices, verticesToString } from "../../services/utils";
+import { initialData } from "../../services/line-chart";
 import Input from "../common/Input";
+import useForm from "../../hooks/useForm";
 
 const Line = () => {
-  const initialData = {
-    plotName: "",
-    description: "",
-    labelsX: "",
-    labelsY: "",
-    labelsZ: "",
-    plots: [{ label: "", color: "", vertices: [] }],
-    vertex: "0, 0, 0",
-    valuesInArray: "",
-  };
   const [numberOfLines, setNumberOfLines] = useState(1);
 
   const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
     useForm(initialData);
 
-  const addMoreLine = () => {
+  const addLine = () => {
+    for (let i = 0; i < data.plots.length; i++) {
+      handleCreateVertices(i);
+    }
+
     const copiedData = { ...data };
     copiedData.plots.push({ label: "", color: "", vertices: [] });
     setData(copiedData);
@@ -130,18 +127,22 @@ const Line = () => {
               <h3 className="form-content-heading">Values</h3>
               <span>Separate each value in a vertex with a comma i.e. “,”</span>
               <Input
-                onChange={handleChange}
-                name="vertex"
+                onChange={(event) => handleArrayChange("plots", index, event)}
+                name="vertices"
                 placeholder="Vertices (x, y, z)"
-                className="input-primary"
+                className="input-primary input-max"
               />
-              <p className="vertices-data">(1, 2, 2), (2, 4, 2)</p>
+              <p className="vertices-data">
+                {verticesToString(
+                  handleCreateVertices(data.plots[index].vertices, index)
+                )}
+              </p>
             </div>
           </div>
         ))}
 
       <div className="form-content">
-        <button type="button" onClick={addMoreLine} className="btn-dark">
+        <button type="button" onClick={addLine} className="btn-dark">
           Add Line
         </button>
       </div>
