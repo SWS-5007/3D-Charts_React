@@ -2,6 +2,7 @@ import { OrbitControls } from "@react-three/drei";
 import React, { useState } from "react";
 import * as THREE from "three";
 import { extend } from "@react-three/fiber";
+import ClosedCylinder from "./ClosedCylinder";
 
 extend(THREE.CylinderGeometry);
 
@@ -43,7 +44,7 @@ const Pie = () => {
     <>
       <OrbitControls />
       <ambientLight />
-      <directionalLight position={(2, 3, 4)} intensity={0.1} />
+      <directionalLight position={(4, 3, 10)} intensity={1} />
 
       {data.map((pie) => {
         const theta = (pie.value * 2 * Math.PI) / total;
@@ -53,12 +54,12 @@ const Pie = () => {
 
         return (
           <>
-            <mesh position-y={height / 2} key={pie.label}>
-              <cylinderGeometry
-                args={[3, 3, height, 20, 20, false, start, theta]}
-              />
-              <meshBasicMaterial color={pie.color} side={THREE.DoubleSide} />
-            </mesh>
+            <ClosedCylinder
+              color={pie.color}
+              thetaLength={theta}
+              thetaStart={start}
+              height={height}
+            />
           </>
         );
       })}
