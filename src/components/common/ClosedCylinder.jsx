@@ -17,7 +17,7 @@ const ClosedCylinder = ({
   const planeMaterial = new THREE.MeshStandardMaterial({
     color,
     side: THREE.DoubleSide,
-  }); // Set your desired material
+  });
   const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
   planeMesh.position.z = 1;
   planeMesh.position.y = height / 2;
@@ -31,7 +31,8 @@ const ClosedCylinder = ({
   const planeMaterial2 = new THREE.MeshStandardMaterial({
     color,
     side: THREE.DoubleSide,
-  }); // Set your desired material
+  });
+
   const planeMesh2 = new THREE.Mesh(planeGeometry2, planeMaterial2);
   planeMesh2.position.z = 1;
   planeMesh2.position.y = height / 2;

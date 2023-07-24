@@ -1,5 +1,4 @@
 import React from "react";
-import { BiPlus } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {

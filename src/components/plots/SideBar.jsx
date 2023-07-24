@@ -1,13 +1,11 @@
 import React from "react";
-import { MdEdit } from "react-icons/md";
-import { AiOutlineMore, AiFillCamera, AiFillSave } from "react-icons/ai";
+import { AiOutlineMore } from "react-icons/ai";
 
 const SideBar = ({
   showVertices,
   onShowVertices,
   fontSize,
   onFontSizeChange,
-  onCaptureImage,
 }) => {
   return (
     <aside>

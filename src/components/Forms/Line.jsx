@@ -23,8 +23,24 @@ const Line = () => {
     setNumberOfLines((numberOfLines) => numberOfLines + 1);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let charts = localStorage.getItem("charts");
+    if (!charts) localStorage.setItem("charts", JSON.stringify([]));
+
+    charts = JSON.parse(localStorage.getItem("charts"));
+    const plot = { id: charts.length, type: "line" };
+    charts.push(plot);
+
+    localStorage.setItem("charts", JSON.stringify(charts));
+    localStorage.setItem(plot.id, JSON.stringify(data));
+
+    window.location = "/plot/" + plot.id;
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="form-header">
         <div className="form-heading">
           <svg

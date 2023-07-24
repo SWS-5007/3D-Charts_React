@@ -1,14 +1,24 @@
 import { Canvas } from "@react-three/fiber";
-import React, { useState } from "react";
-import { saveAs } from "file-saver";
-
+import { useParams } from "react-router-dom";
 import Line from "./Line";
-import Pie from "./Pie";
+import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 
 const PlotContainer = () => {
   const [fontSize, setFontSize] = useState(0.4);
   const [showVertices, setShowVertices] = useState(true);
+  const { id } = useParams();
+  const [lineChart, setLineChart] = useState(null);
+
+  useEffect(() => {
+    let charts = localStorage.getItem("charts");
+
+    charts = JSON.parse(charts);
+    console.log(charts, id);
+    const plot = charts.find((plot) => plot.id === Number(id));
+
+    setLineChart(JSON.parse(localStorage.getItem(plot.id)));
+  }, []);
 
   const handleShowVertices = (event) => {
     setShowVertices(event.target.checked);
@@ -38,7 +48,11 @@ const PlotContainer = () => {
     <>
       <section className="plot-container">
         <Canvas camera={{ position: [5, 6, 10] }}>
-          <Line fontSize={fontSize} showVertices={showVertices} />
+          <Line
+            lineChart={lineChart}
+            fontSize={fontSize}
+            showVertices={showVertices}
+          />
         </Canvas>
         <SideBar
           fontSize={fontSize}

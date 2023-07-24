@@ -15,7 +15,7 @@ function App() {
 
       <Routes>
         <Route element={<FormContainer />} path="/plot/new" />
-        <Route element={<PlotContainer />} path="/plot" />
+        <Route element={<PlotContainer />} path="/plot/:id" />
         <Route element={<Plots />} path="/plots" />
         <Route element={<NewChart />} path="/" />
       </Routes>

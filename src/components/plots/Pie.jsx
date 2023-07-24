@@ -2,7 +2,7 @@ import { OrbitControls } from "@react-three/drei";
 import React from "react";
 import * as THREE from "three";
 import { extend } from "@react-three/fiber";
-import ClosedCylinder from "./ClosedCylinder";
+import ClosedCylinder from "../common/ClosedCylinder";
 
 extend(THREE.CylinderGeometry);
 
