@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 
 import { handleCreateVertices } from "../../services/utils";
 import Axis from "../axes/Axis";
+import { getLineChart } from "../../services/line-chart";
 
 const Line = ({ fontSize, showVertices, lineChart }) => {
   const { scene } = useThree();
@@ -12,7 +13,7 @@ const Line = ({ fontSize, showVertices, lineChart }) => {
 
   useEffect(() => {
     const points = [];
-    for (let plot of lineChart.plots) {
+    for (let plot of lineChart.lines) {
       const verticesArray = handleCreateVertices(plot.vertices);
       const vertices = [];
 
@@ -48,11 +49,8 @@ const Line = ({ fontSize, showVertices, lineChart }) => {
       <Axis />
       {showVertices && (
         <>
-          {points.map((vertex) => (
-            <Html
-              key={`${vertex.x}, ${vertex.y}, ${vertex.z}`}
-              position={vertex}
-            >
+          {points.map((vertex, index) => (
+            <Html key={index} position={vertex}>
               <p
                 style={{
                   color: "black",

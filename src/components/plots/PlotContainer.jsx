@@ -3,21 +3,30 @@ import { useParams } from "react-router-dom";
 import Line from "./Line";
 import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
+// import queryString from "query-string";
+import { getLineChart, initialData } from "../../services/line-chart";
 
 const PlotContainer = () => {
   const [fontSize, setFontSize] = useState(0.4);
   const [showVertices, setShowVertices] = useState(true);
   const { id } = useParams();
-  const [lineChart, setLineChart] = useState(null);
+  const [lineChart, setLineChart] = useState(initialData);
+  const type = "line";
+  // const { type } = queryString(window.location.search);
 
+  console.log(window.location.search);
+
+  const fetchLineChart = async () => {
+    try {
+      const { data: chart } = await getLineChart(id);
+      setLineChart(chart);
+      console.log(chart);
+    } catch (error) {
+      alert("Error getting the chart!");
+    }
+  };
   useEffect(() => {
-    let charts = localStorage.getItem("charts");
-
-    charts = JSON.parse(charts);
-    console.log(charts, id);
-    const plot = charts.find((plot) => plot.id === Number(id));
-
-    setLineChart(JSON.parse(localStorage.getItem(plot.id)));
+    if (type === "line") fetchLineChart();
   }, []);
 
   const handleShowVertices = (event) => {
@@ -48,11 +57,13 @@ const PlotContainer = () => {
     <>
       <section className="plot-container">
         <Canvas camera={{ position: [5, 6, 10] }}>
-          <Line
-            lineChart={lineChart}
-            fontSize={fontSize}
-            showVertices={showVertices}
-          />
+          {type === "line" && (
+            <Line
+              lineChart={lineChart}
+              fontSize={fontSize}
+              showVertices={showVertices}
+            />
+          )}
         </Canvas>
         <SideBar
           fontSize={fontSize}

@@ -17,6 +17,7 @@ const Input = ({
         type={type}
         onChange={onChange}
         className="input-primary"
+        value={value}
       />
     </>
   );

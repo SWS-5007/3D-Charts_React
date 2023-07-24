@@ -1,42 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { handleCreateVertices, verticesToString } from "../../services/utils";
-import { initialData } from "../../services/line-chart";
 import Input from "../common/Input";
 import useForm from "../../hooks/useForm";
+import queryString from "query-string";
+import {
+  createLineChart,
+  getLineChart,
+  initialData,
+  updateLineChart,
+} from "../../services/line-chart";
 
 const Line = () => {
+  const { edit, id } = queryString.parse(window.location.search);
   const [numberOfLines, setNumberOfLines] = useState(1);
-
   const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
     useForm(initialData);
 
-  const addLine = () => {
-    for (let i = 0; i < data.plots.length; i++) {
-      handleCreateVertices(i);
+  const fetchLineChart = async (id) => {
+    try {
+      const { data: chart } = await getLineChart(id);
+      setData(chart);
+      setNumberOfLines(chart.lines.length);
+    } catch (error) {
+      alert("The Chart ID is not valid!");
     }
+  };
+
+  useEffect(() => {
+    if (edit && id) {
+      fetchLineChart(id);
+      console.log(edit, id);
+    }
+  }, []);
+
+  const addLine = () => {
+    for (let i = 0; i < data.lines.length; i++) handleCreateVertices(i);
 
     const copiedData = { ...data };
-    copiedData.plots.push({ label: "", color: "", vertices: [] });
+    copiedData.lines.push({ label: "", color: "", vertices: [] });
     setData(copiedData);
 
     setNumberOfLines((numberOfLines) => numberOfLines + 1);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let charts = localStorage.getItem("charts");
-    if (!charts) localStorage.setItem("charts", JSON.stringify([]));
+    const { edit, id } = queryString.parse(window.location.search);
 
-    charts = JSON.parse(localStorage.getItem("charts"));
-    const plot = { id: charts.length, type: "line" };
-    charts.push(plot);
+    if (edit && id) {
+      try {
+        const copiedData = { ...data };
+        delete copiedData._id;
+        delete copiedData.__v;
+        console.log(copiedData);
 
-    localStorage.setItem("charts", JSON.stringify(charts));
-    localStorage.setItem(plot.id, JSON.stringify(data));
+        const { data: chart } = await updateLineChart(id, copiedData);
+        // window.location = "/plot/" + chart._id + "/?type=line";
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    }
 
-    window.location = "/plot/" + plot.id;
+    try {
+      const { data: chart } = await createLineChart(data);
+      window.location = "/plot/" + chart._id + "/?type=line";
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -72,16 +105,18 @@ const Line = () => {
 
       <div className="form-content">
         <Input
-          name="plotName"
+          name="name"
           placeholder="Plot Name"
           onChange={handleChange}
           className="input-primary"
+          value={data["name"]}
         />
         <Input
           name="description"
           placeholder="Description"
           onChange={handleChange}
           className="input-primary"
+          value={data["description"]}
         />
       </div>
 
@@ -93,18 +128,21 @@ const Line = () => {
           placeholder="X-Axis Labels"
           onChange={handleChange}
           className="input-primary input-max"
+          value={data["labelsX"]}
         />
         <Input
           name="labelsY"
           placeholder="Y-Axis Labels"
           onChange={handleChange}
           className="input-primary input-max"
+          value={data["labelsY"]}
         />
         <Input
           name="labelsZ"
           placeholder="Z-Axis Labels"
           onChange={handleChange}
           className="input-primary input-max"
+          value={data["labelsZ"]}
         />
       </div>
 
@@ -116,25 +154,27 @@ const Line = () => {
               <h3 className="form-content-heading">Plot {index + 1}</h3>
 
               <Input
-                onChange={(event) => handleArrayChange("plots", index, event)}
+                onChange={(event) => handleArrayChange("lines", index, event)}
                 name="label"
                 placeholder="Label"
                 className="input-primary"
+                value={data["lines"][index]["label"]}
               />
 
               <div className="color-input">
                 <div className="color-container">
                   <span
-                    style={{ backgroundColor: data.plots[index].color }}
+                    style={{ backgroundColor: data.lines[index].color }}
                     className="color"
                   />
                 </div>
                 <Input
-                  onChange={(event) => handleArrayChange("plots", index, event)}
+                  onChange={(event) => handleArrayChange("lines", index, event)}
                   name="color"
                   placeholder="Color"
                   type="color"
                   className="input-primary"
+                  value={data["lines"][index]["color"]}
                 />
               </div>
             </div>
@@ -143,14 +183,15 @@ const Line = () => {
               <h3 className="form-content-heading">Values</h3>
               <span>Separate each value in a vertex with a comma i.e. “,”</span>
               <Input
-                onChange={(event) => handleArrayChange("plots", index, event)}
+                onChange={(event) => handleArrayChange("lines", index, event)}
                 name="vertices"
                 placeholder="Vertices (x, y, z)"
                 className="input-primary input-max"
+                value={data["lines"][index]["vertices"]}
               />
               <p className="vertices-data">
                 {verticesToString(
-                  handleCreateVertices(data.plots[index].vertices, index)
+                  handleCreateVertices(data.lines[index].vertices, index)
                 )}
               </p>
             </div>
