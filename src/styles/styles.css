@@ -7,11 +7,10 @@ html {
   margin: 0;
   padding: 0;
   font-family: "Poppins";
-  letter-spacing: 1.2px;
 }
 
 body {
-  background-color: #ecf0f3;
+  background-color: #f0f0f0;
   box-sizing: border-box;
 }
 
@@ -23,7 +22,6 @@ body {
 }
 
 canvas {
-  background-color: #ecf0f3;
   width: 100%;
   height: 100%;
   min-height: 100vh;
@@ -31,12 +29,12 @@ canvas {
 
 h1 {
   font-size: 3.2rem;
-  color: #686868;
+  color: #252525;
 }
 
 h2 {
   font-size: 2.4rem;
-  color: #686868;
+  color: #252525;
 }
 
 h3 {
@@ -67,12 +65,16 @@ a {
   color: dodgerblue;
 }
 
-button {
+button,
+.btn {
   border: none;
-  box-shadow: inset -10px -10px 30px 0 #fff, inset 10px 10px 30px 0 #acbdd8;
   padding: 0.4rem 1.2rem;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
+  background-color: #252525;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
 }
 
 .btn-flex {
@@ -83,16 +85,23 @@ button {
 }
 
 .btn-primary {
-  box-shadow: -10px -10px 30px 0 #fff, 10px 10px 30px 0 #acbdd8;
   padding: 1.8rem 2.2rem;
 }
 
 .btn-dark {
   background-color: black;
   border-radius: 5px;
-  box-shadow: none;
   color: white;
   padding: 0.8rem 2rem;
+}
+
+.btn-clickable {
+  background-color: transparent;
+  color: #707070;
+  text-align: left;
+  font-weight: normal;
+  font-size: 1.2rem;
+  padding: 0;
 }
 
 nav {
@@ -131,7 +140,7 @@ nav {
   flex-direction: column;
 }
 .create-new-plot .chart-logo {
-  box-shadow: -10px -10px 30px 0 #fff, 10px 10px 30px 0 #acbdd8;
+  border: 1px solid #c1c1c1;
   padding: 4rem;
   border-radius: 12px;
 }
@@ -168,25 +177,20 @@ nav {
 .plots {
   min-height: 300px;
   margin-top: 4rem;
-  box-shadow: inset -10px -10px 30px 0 #fff, inset 10px 10px 30px 0 #acbdd8;
   border-radius: 12px;
-  padding: 4rem;
 }
 
 .plots-table {
   width: 100%;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: #707070;
+  border-collapse: collapse;
 }
 
 td {
   min-width: 60px;
-  padding: 1.4rem 1rem;
-  border-right: 1px solid #c1c1c1;
-}
-
-td:last-child {
-  border: none;
+  padding: 1.8rem 1rem;
+  border-bottom: 1px solid #c1c1c1;
 }
 
 .plots-footer {
@@ -243,10 +247,9 @@ input {
 .input-chart {
   outline: none;
   border: none;
-  box-shadow: inset -10px -10px 30px 0 #fff, inset 10px 10px 30px 0 #acbdd8;
-  max-width: 60px;
-  padding: 0.6rem 1.2rem;
-  border-radius: 12px;
+  max-width: 100px;
+  padding: 0.3rem 1.2rem;
+  border-radius: 5px;
 }
 
 .input-primary {

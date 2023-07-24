@@ -15,8 +15,8 @@ export function handleCreateVertices(verticesString) {
     .map((value) => value.trim());
 
   let count = 0;
+  let vertex = [0, 0, 0];
   const vertices = [];
-  const vertex = [0, 0, 0];
 
   for (let value of splittedString) {
     let parsed = parseFloat(value);

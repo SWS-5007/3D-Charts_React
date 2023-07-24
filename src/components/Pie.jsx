@@ -1,5 +1,5 @@
 import { OrbitControls } from "@react-three/drei";
-import React, { useState } from "react";
+import React from "react";
 import * as THREE from "three";
 import { extend } from "@react-three/fiber";
 import ClosedCylinder from "./ClosedCylinder";

@@ -4,7 +4,7 @@ import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 
-const Line = () => {
+const Line = ({ fontSize, showVertices }) => {
   const { scene } = useThree();
   const vertices = [
     new THREE.Vector3(0, 0, 2),
@@ -29,7 +29,7 @@ const Line = () => {
     curve.getPoints(100)
   );
   const geometry2 = new THREE.BufferGeometry().setFromPoints(
-    curve2.getPoints(100)
+    curve2.getPoints(200)
   );
   const material = new THREE.LineBasicMaterial({ color: "red", linewidth: 5 });
   const material2 = new THREE.LineBasicMaterial({
@@ -45,34 +45,48 @@ const Line = () => {
     <>
       <OrbitControls />
       <Axis />
-      {vertices.map((vertex) => (
-        <Html key={`${vertex.x}, ${vertex.y}, ${vertex.z}`} position={vertex}>
-          <p
-            style={{
-              color: "black",
-              fontSize: ".4rem",
-              width: "50px",
-              transform: "translate(-25%, -200%)",
-            }}
-          >
-            ({vertex.x}, {vertex.y}, {vertex.z})
-          </p>
-        </Html>
-      ))}
-      {vertices2.map((vertex) => (
-        <Html key={`${vertex.x}, ${vertex.y}, ${vertex.z}`} position={vertex}>
-          <p
-            style={{
-              color: "black",
-              fontSize: ".4rem",
-              width: "50px",
-              transform: "translate(-25%, -200%)",
-            }}
-          >
-            ({vertex.x}, {vertex.y}, {vertex.z})
-          </p>
-        </Html>
-      ))}
+      {showVertices && (
+        <>
+          {vertices.map((vertex) => (
+            <Html
+              key={`${vertex.x}, ${vertex.y}, ${vertex.z}`}
+              position={vertex}
+            >
+              <p
+                style={{
+                  color: "black",
+                  fontSize: `${fontSize}rem`,
+                  width: "100%",
+                  minWidth: "300px",
+                  transform: "translate(-5%, -200%)",
+                }}
+              >
+                ({vertex.x}, {vertex.y}, {vertex.z})
+              </p>
+            </Html>
+          ))}
+
+          {vertices2.map((vertex) => (
+            <Html
+              key={`${vertex.x}, ${vertex.y}, ${vertex.z}`}
+              position={vertex}
+            >
+              <p
+                style={{
+                  color: "black",
+                  fontSize: `${fontSize}rem`,
+                  width: "50px",
+                  width: "100%",
+                  minWidth: "300px",
+                  transform: "translate(0, -200%)",
+                }}
+              >
+                ({vertex.x}, {vertex.y}, {vertex.z})
+              </p>
+            </Html>
+          ))}
+        </>
+      )}
     </>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Plots = () => {
   return (
@@ -51,21 +52,13 @@ const Plots = () => {
             </td>
             <td>The description of profits chart</td>
           </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
         </table>
       </div>
 
       <footer className="plots-footer">
-        <button className="btn-primary">Create New</button>
+        <Link to="/" className="btn btn-primary">
+          Create New
+        </Link>
       </footer>
     </section>
   );
