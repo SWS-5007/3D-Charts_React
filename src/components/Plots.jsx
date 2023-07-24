@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getLineCharts, initialData } from "../services/line-chart";
+import { getPieCharts } from "../services/pie-chart";
 
 const Plots = () => {
   const [lineCharts, setLineCharts] = useState([initialData]);
+  const [pieCharts, setPieCharts] = useState([initialData]);
 
-  const fetchData = async () => {
+  const fetchLineCharts = async () => {
     try {
       const { data: charts } = await getLineCharts();
       console.log(charts);
@@ -14,9 +16,19 @@ const Plots = () => {
       alert("Error loading line charts!");
     }
   };
+  const fetchPieCharts = async () => {
+    try {
+      const { data: charts } = await getPieCharts();
+      console.log(charts);
+      setPieCharts(charts);
+    } catch (error) {
+      alert("Error loading pie charts!");
+    }
+  };
 
   useEffect(() => {
-    fetchData();
+    fetchLineCharts();
+    fetchPieCharts();
   }, []);
 
   return (
@@ -57,6 +69,17 @@ const Plots = () => {
                     <Link to={`/plot/${chart._id}?type=line`}>
                       {chart.name}
                     </Link>
+                  </strong>
+                </td>
+                <td>{chart.description}</td>
+              </tr>
+            ))}
+            {pieCharts.map((chart, index) => (
+              <tr key={chart._id}>
+                <td>{lineCharts.length + index + 1}.</td>
+                <td>
+                  <strong>
+                    <Link to={`/plot/${chart._id}?type=pie`}>{chart.name}</Link>
                   </strong>
                 </td>
                 <td>{chart.description}</td>

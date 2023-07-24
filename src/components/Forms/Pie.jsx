@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import Input from "../common/Input";
+import { createPieChart, initialData } from "../../services/pie-chart";
+import useForm from "../../hooks/useForm";
 
 const Pie = () => {
+  const [valuesCount, setValuesCount] = useState(1);
+  const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
+    useForm(initialData);
+
+  const handleValuesCount = () => {
+    const copiedData = { ...data };
+    data.values.push({ label: "", value: "", color: "" });
+    setData(copiedData);
+    setValuesCount(valuesCount + 1);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data: chart } = await createPieChart(data);
+      window.location = "/plot/" + chart._id + "/?type=pie";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="form-header">
         <div className="form-heading">
           <svg
@@ -31,33 +56,63 @@ const Pie = () => {
       </div>
 
       <div className="form-content">
-        <input
-          name="plot_name"
+        <Input
+          onChange={handleChange}
+          value={data["name"]}
+          name="name"
           placeholder="Plot Name"
           className="input-primary"
         />
-        <input
+        <Input
+          onChange={handleChange}
+          value={data["description"]}
           name="description"
           placeholder="Description"
           className="input-primary"
         />
       </div>
 
-      <div className="form-content">
-        <h3 className="form-content-heading">Values</h3>
+      {Array(valuesCount)
+        .fill(0)
+        .map((value, index) => (
+          <div className="form-content">
+            <h3 className="form-content-heading">Value {index + 1}</h3>
 
-        <input name="name" placeholder="Label" className="input-primary" />
-        <input name="value" placeholder="Value" className="input-primary" />
+            <Input
+              onChange={(e) => handleArrayChange("values", index, e)}
+              value={data.values[index]["label"]}
+              name="label"
+              placeholder="Label"
+              className="input-primary"
+            />
+            <Input
+              onChange={(e) => handleArrayChange("values", index, e)}
+              value={data.values[index]["value"]}
+              name="value"
+              placeholder="Value"
+              className="input-primary"
+            />
 
-        <div className="color-input">
-          <div className="color-container">
-            <span className="color" />
+            <div className="color-input">
+              <div className="color-container">
+                <span className="color" />
+              </div>
+              <Input
+                type={"color"}
+                onChange={(e) => handleArrayChange("values", index, e)}
+                value={data.values[index]["color"]}
+                name="color"
+                placeholder="Color"
+                className="input-primary"
+              />
+            </div>
           </div>
-          <input name="color" placeholder="Color" className="input-primary" />
-        </div>
-      </div>
+        ))}
+
       <div className="form-content">
-        <button className="btn-dark">Add</button>
+        <button type="button" onClick={handleValuesCount} className="btn-dark">
+          Add
+        </button>
       </div>
     </form>
   );

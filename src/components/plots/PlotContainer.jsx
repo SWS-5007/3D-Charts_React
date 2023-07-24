@@ -3,16 +3,24 @@ import { useParams } from "react-router-dom";
 import Line from "./Line";
 import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
-// import queryString from "query-string";
-import { getLineChart, initialData } from "../../services/line-chart";
+import queryString from "query-string";
+import {
+  getLineChart,
+  initialData as lineChartInitialData,
+} from "../../services/line-chart";
+import {
+  getPieChart,
+  initialData as pieChartInitialData,
+} from "../../services/pie-chart";
+import Pie from "../plots/Pie";
 
 const PlotContainer = () => {
   const [fontSize, setFontSize] = useState(0.4);
   const [showVertices, setShowVertices] = useState(true);
   const { id } = useParams();
-  const [lineChart, setLineChart] = useState(initialData);
-  const type = "line";
-  // const { type } = queryString(window.location.search);
+  const [lineChart, setLineChart] = useState(lineChartInitialData);
+  const [pieChart, setPieChart] = useState(pieChartInitialData);
+  const { type } = queryString.parse(window.location.search);
 
   console.log(window.location.search);
 
@@ -22,11 +30,23 @@ const PlotContainer = () => {
       setLineChart(chart);
       console.log(chart);
     } catch (error) {
-      alert("Error getting the chart!");
+      window.location = "/not-found";
     }
   };
+
+  const fetchPieChart = async () => {
+    try {
+      const { data: chart } = await getPieChart(id);
+      setPieChart(chart);
+    } catch (error) {
+      window.location = "/not-found";
+    }
+  };
+
   useEffect(() => {
     if (type === "line") fetchLineChart();
+    if (type === "pie") fetchPieChart();
+    // else window.location = "/not-found";
   }, []);
 
   const handleShowVertices = (event) => {
@@ -60,6 +80,13 @@ const PlotContainer = () => {
           {type === "line" && (
             <Line
               lineChart={lineChart}
+              fontSize={fontSize}
+              showVertices={showVertices}
+            />
+          )}
+          {type === "pie" && (
+            <Pie
+              data={pieChart}
               fontSize={fontSize}
               showVertices={showVertices}
             />

@@ -291,7 +291,7 @@ input {
 .color-container .color {
   width: 12px;
   height: 12px;
-  background-color: red;
+  background-color: black;
   border-radius: 50%;
 }
 
