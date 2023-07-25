@@ -33,7 +33,7 @@ const AxisPoints = () => {
   const geometryZ = new THREE.BufferGeometry();
   geometryZ.setAttribute("position", new THREE.BufferAttribute(verticesZ, 3));
   const pointsMaterial = new THREE.PointsMaterial({
-    color: "black",
+    color: "#adadad",
     size: 0.05,
     transparent: true,
     opacity: 0.2,

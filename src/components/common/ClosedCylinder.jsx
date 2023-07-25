@@ -9,17 +9,18 @@ const ClosedCylinder = ({
   color = "white",
 }) => {
   const { scene } = useThree();
+  const radius = 4;
 
   const hinge = new THREE.Object3D();
   scene.add(hinge);
 
-  const planeGeometry = new THREE.PlaneGeometry(2, height);
+  const planeGeometry = new THREE.PlaneGeometry(radius, height);
   const planeMaterial = new THREE.MeshStandardMaterial({
     color,
     side: THREE.DoubleSide,
   });
   const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-  planeMesh.position.z = 1;
+  planeMesh.position.z = radius / 2;
   planeMesh.position.y = height / 2;
   planeMesh.rotation.y = Math.PI / 2;
   hinge.add(planeMesh);
@@ -27,14 +28,14 @@ const ClosedCylinder = ({
   const hinge2 = new THREE.Object3D();
   scene.add(hinge2);
 
-  const planeGeometry2 = new THREE.PlaneGeometry(2, height);
+  const planeGeometry2 = new THREE.PlaneGeometry(radius, height);
   const planeMaterial2 = new THREE.MeshStandardMaterial({
     color,
     side: THREE.DoubleSide,
   });
 
   const planeMesh2 = new THREE.Mesh(planeGeometry2, planeMaterial2);
-  planeMesh2.position.z = 1;
+  planeMesh2.position.z = radius / 2;
   planeMesh2.position.y = height / 2;
   planeMesh2.rotation.y = Math.PI / 2;
   hinge2.add(planeMesh2);
@@ -48,9 +49,9 @@ const ClosedCylinder = ({
 
   return (
     <>
-      <mesh position-y={height / 2}>
+      <mesh castShadow receiveShadow position-y={height / 2}>
         <cylinderGeometry
-          args={[2, 2, height, 30, 30, false, thetaStart, thetaLength]}
+          args={[4, 4, height, 30, 30, false, thetaStart, thetaLength]}
         />
         <meshStandardMaterial roughness={0.5} color={color} />
       </mesh>

@@ -1,4 +1,4 @@
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { useParams } from "react-router-dom";
 import Line from "./Line";
 import React, { useEffect, useState } from "react";
@@ -15,14 +15,25 @@ import {
 import Pie from "../plots/Pie";
 
 const PlotContainer = () => {
-  const [fontSize, setFontSize] = useState(0.4);
+  const [fontSize, setFontSize] = useState(1.4);
   const [showVertices, setShowVertices] = useState(true);
   const { id } = useParams();
   const [lineChart, setLineChart] = useState(lineChartInitialData);
   const [pieChart, setPieChart] = useState(pieChartInitialData);
   const { type } = queryString.parse(window.location.search);
+  const { alignAxis, setAlignAxis } = useState("");
+  const [cameraPosition, setCameraPosition] = useState([5, 6, 10]);
 
-  console.log(window.location.search);
+  const handleAlignAxis = (e) => {
+    const value = e.target.value;
+    if (!value) return;
+    if (value === "X") setCameraPosition([15, 0, 0]);
+    if (value === "Y") setCameraPosition([0, 15, 0]);
+    if (value === "Z") setCameraPosition([0, 0, 15]);
+    if (value === "-X") setCameraPosition([-15, 0, 0]);
+    if (value === "-Y") setCameraPosition([0, -15, 0]);
+    if (value === "-Z") setCameraPosition([0, 0, -15]);
+  };
 
   const fetchLineChart = async () => {
     try {
@@ -46,7 +57,6 @@ const PlotContainer = () => {
   useEffect(() => {
     if (type === "line") fetchLineChart();
     if (type === "pie") fetchPieChart();
-    // else window.location = "/not-found";
   }, []);
 
   const handleShowVertices = (event) => {
@@ -76,9 +86,10 @@ const PlotContainer = () => {
   return (
     <>
       <section className="plot-container">
-        <Canvas camera={{ position: [5, 6, 10] }}>
+        <Canvas camera={{ position: cameraPosition }}>
           {type === "line" && (
             <Line
+              cameraPosition={cameraPosition}
               lineChart={lineChart}
               fontSize={fontSize}
               showVertices={showVertices}
@@ -86,6 +97,7 @@ const PlotContainer = () => {
           )}
           {type === "pie" && (
             <Pie
+              cameraPosition={cameraPosition}
               data={pieChart}
               fontSize={fontSize}
               showVertices={showVertices}
@@ -93,11 +105,15 @@ const PlotContainer = () => {
           )}
         </Canvas>
         <SideBar
+          type={type}
+          pieChart={pieChart}
+          lineChart={lineChart}
           fontSize={fontSize}
           onFontSizeChange={handleFontSize}
           onShowVertices={handleShowVertices}
           showVertices={showVertices}
           onCaptureImage={handleCaptureImage}
+          onAlignAxis={handleAlignAxis}
         />
       </section>
     </>

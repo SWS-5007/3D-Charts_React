@@ -10,6 +10,10 @@ export function createPieChart(data) {
   return http.post("/pies/", data);
 }
 
+export function updatePieChart(id, data) {
+  return http.put("/pies/" + id, data);
+}
+
 export function getPieCharts() {
   return http.get("/pies/");
 }

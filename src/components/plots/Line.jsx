@@ -1,15 +1,19 @@
 import { Html, OrbitControls } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import React, { useEffect, useState } from "react";
 
 import { handleCreateVertices } from "../../services/utils";
 import Axis from "../axes/Axis";
-import { getLineChart } from "../../services/line-chart";
 
-const Line = ({ fontSize, showVertices, lineChart }) => {
-  const { scene } = useThree();
+const Line = ({ fontSize, showVertices, lineChart, cameraPosition }) => {
+  const { scene, camera } = useThree();
   const [points, setPoints] = useState([]);
+
+  useEffect(() => {
+    console.log("hello");
+    camera.position.set(...cameraPosition);
+  }, [cameraPosition]);
 
   useEffect(() => {
     const points = [];
@@ -47,26 +51,32 @@ const Line = ({ fontSize, showVertices, lineChart }) => {
     <>
       <OrbitControls />
       <Axis />
-      {showVertices && (
-        <>
-          {points.map((vertex, index) => (
-            <Html key={index} position={vertex}>
-              <p
-                style={{
-                  color: "black",
-                  fontSize: `${fontSize}rem`,
-                  width: "50px",
-                  width: "100%",
-                  minWidth: "300px",
-                  transform: "translate(0, -200%)",
-                }}
-              >
-                ({vertex[0]}, {vertex[1]}, {vertex[2]})
-              </p>
-            </Html>
-          ))}
-        </>
-      )}
+      <>
+        {points.map((vertex, index) => (
+          <>
+            <mesh position={[vertex[0], vertex[1], vertex[2]]}>
+              <sphereGeometry args={[0.04]} />
+              <meshBasicMaterial color={"black"} />
+            </mesh>
+            {showVertices && (
+              <Html key={index} position={vertex}>
+                <p
+                  style={{
+                    color: "black",
+                    fontSize: `${fontSize}rem`,
+                    width: "50px",
+                    width: "100%",
+                    minWidth: "300px",
+                    transform: "translate(0, -200%)",
+                  }}
+                >
+                  ({vertex[0]}, {vertex[1]}, {vertex[2]})
+                </p>
+              </Html>
+            )}
+          </>
+        ))}
+      </>
     </>
   );
 };

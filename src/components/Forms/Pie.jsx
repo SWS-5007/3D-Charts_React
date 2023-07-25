@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../common/Input";
-import { createPieChart, initialData } from "../../services/pie-chart";
+import {
+  createPieChart,
+  getPieChart,
+  initialData,
+  updatePieChart,
+} from "../../services/pie-chart";
 import useForm from "../../hooks/useForm";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Pie = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [valuesCount, setValuesCount] = useState(1);
   const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
     useForm(initialData);
+
+  const fetchPieChart = async () => {
+    try {
+      const { data: chart } = await getPieChart(id);
+      delete chart.__v;
+      setData(chart);
+      setValuesCount(chart.values.length);
+    } catch (error) {
+      navigate("/pie/new");
+    }
+  };
+
+  useEffect(() => {
+    if (id !== "new") fetchPieChart();
+  }, []);
 
   const handleValuesCount = () => {
     const copiedData = { ...data };
@@ -18,9 +41,18 @@ const Pie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const chart = { ...data };
+    const id = chart._id;
+    console.log(chart);
     try {
-      const { data: chart } = await createPieChart(data);
-      window.location = "/plot/" + chart._id + "/?type=pie";
+      if (id) {
+        delete chart._id;
+        await updatePieChart(id, chart);
+        navigate(`/plot/${id}/?type=pie`);
+      } else {
+        const { data: chart } = await createPieChart(data);
+        navigate(`/plot/${chart._id}/?type=pie`);
+      }
     } catch (error) {
       console.log(error);
     }
