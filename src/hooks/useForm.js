@@ -9,7 +9,6 @@ export default function useForm(initialData, schema) {
     const { name, value } = event.target;
     if (schema) {
       const propertySchema = Joi.object({ [name]: schema[name] });
-      console.log(propertySchema);
       const { error } = Joi.validate({ [name]: value }, propertySchema, {
         abortEarly: false,
       });
@@ -31,8 +30,6 @@ export default function useForm(initialData, schema) {
     });
     if (error) errors[array][index][name] = error.details[0].message;
     else delete errors[array][index][name];
-
-    console.log(errors);
 
     const copiedData = { ...data };
     copiedData[array][index][name] = value;

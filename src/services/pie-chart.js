@@ -3,7 +3,7 @@ import http from "./http";
 export const initialData = {
   name: "",
   description: "",
-  values: [{ label: "", color: "", value: "" }],
+  values: [{ label: "", color: "#000000", value: "" }],
 };
 
 export function createPieChart(data) {

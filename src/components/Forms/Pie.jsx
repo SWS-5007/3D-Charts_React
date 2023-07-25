@@ -12,23 +12,33 @@ import { toast } from "react-toastify";
 import Joi from "joi-browser";
 
 const pieValueValidationSchema = {
-  value: Joi.number().required(),
-  label: Joi.string().max(55).required(),
-  color: Joi.string().max(55).required(),
+  value: Joi.number().required().label("Value"),
+  label: Joi.string().max(55).required().label("Label"),
+  color: Joi.string().max(55).required().label("Color"),
 };
 
 const schema = {
-  name: Joi.string().max(55).required(),
-  description: Joi.string().allow("").max(155).required(),
-  values: Joi.array().items(pieValueValidationSchema).required(),
+  name: Joi.string().max(55).required().label("Name"),
+  description: Joi.string().allow("").max(155).required().label("Description"),
+  values: Joi.array()
+    .items(pieValueValidationSchema)
+    .required()
+    .label("Values"),
 };
 
 const Pie = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [valuesCount, setValuesCount] = useState(1);
-  const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
-    useForm(initialData);
+  const {
+    data,
+    setData,
+    errors,
+    setErrors,
+    handleChange,
+    handleArrayChange,
+    validate,
+  } = useForm(initialData, schema);
 
   const fetchPieChart = async () => {
     try {
@@ -47,13 +57,20 @@ const Pie = () => {
 
   const handleValuesCount = () => {
     const copiedData = { ...data };
-    data.values.push({ label: "", value: "", color: "" });
+    data.values.push({ label: "", value: "", color: "#000000" });
     setData(copiedData);
     setValuesCount(valuesCount + 1);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const errors = validate();
+    setErrors(errors || {});
+    for (let error in errors) {
+      toast.error(`${error}: ${errors[error]}`);
+    }
+    if (errors) return;
 
     const chart = { ...data };
     const id = chart._id;
@@ -123,23 +140,28 @@ const Pie = () => {
       {Array(valuesCount)
         .fill(0)
         .map((value, index) => (
-          <div className="form-content">
+          <div key={index} className="form-content">
             <h3 className="form-content-heading">Value {index + 1}</h3>
 
             <Input
-              onChange={(e) => handleArrayChange("values", index, e)}
+              onChange={(e) =>
+                handleArrayChange("values", index, e, pieValueValidationSchema)
+              }
               value={data.values[index]["label"]}
               name="label"
               placeholder="Label"
               className="input-primary"
-              error={errors['values']["name"]}
+              error={errors["values"][index]["label"]}
             />
             <Input
-              onChange={(e) => handleArrayChange("values", index, e)}
+              onChange={(e) =>
+                handleArrayChange("values", index, e, pieValueValidationSchema)
+              }
               value={data.values[index]["value"]}
               name="value"
               placeholder="Value"
               className="input-primary"
+              error={errors["values"][index]["value"]}
             />
 
             <div className="color-input">
