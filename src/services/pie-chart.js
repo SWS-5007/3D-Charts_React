@@ -17,3 +17,7 @@ export function getPieCharts() {
 export function getPieChart(id) {
   return http.get("/pies/" + id);
 }
+
+export function deletePieChart(id) {
+  return http.delete("/pies/" + id);
+}

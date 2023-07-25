@@ -1,6 +1,6 @@
 $fontFamily: "Poppins";
 
-$colorBackground: #f0f0f0;
+$colorBackground: #fff;
 $colorDarkest: black;
 $colorDarker: #252525;
 $colorDark: #707070;
@@ -122,6 +122,20 @@ button,
   padding: 0;
 }
 
+.btn-icon {
+  background-color: transparent;
+  padding: 1rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.btn-icon:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
 // Navbar
 
 nav {
@@ -220,6 +234,13 @@ td {
   min-width: 60px;
   padding: 1.8rem 1rem;
   border-bottom: 1px solid $colorLight;
+}
+
+.cell-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 .plots-footer {

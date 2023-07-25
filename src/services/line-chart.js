@@ -25,6 +25,6 @@ export function updateLineChart(id, data) {
   return http.put("/plots/" + id, data);
 }
 
-export function deletePieChart(id) {
+export function deleteLineChart(id) {
   return http.delete("/plots/" + id);
 }

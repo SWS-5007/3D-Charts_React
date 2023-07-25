@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getLineCharts, initialData } from "../services/line-chart";
-import { getPieCharts } from "../services/pie-chart";
+import { Link, useNavigate } from "react-router-dom";
+
+import { deletePieChart, getPieCharts } from "../services/pie-chart";
+import { FiDelete } from "react-icons/fi";
+import { LuEdit2 } from "react-icons/lu";
+import {
+  deleteLineChart,
+  getLineCharts,
+  initialData,
+} from "../services/line-chart";
 
 const Plots = () => {
   const [lineCharts, setLineCharts] = useState([initialData]);
   const [pieCharts, setPieCharts] = useState([initialData]);
+  const navigate = useNavigate();
 
   const fetchLineCharts = async () => {
     try {
       const { data: charts } = await getLineCharts();
-      console.log(charts);
       setLineCharts(charts);
     } catch (error) {
       alert("Error loading line charts!");
@@ -19,7 +26,6 @@ const Plots = () => {
   const fetchPieCharts = async () => {
     try {
       const { data: charts } = await getPieCharts();
-      console.log(charts);
       setPieCharts(charts);
     } catch (error) {
       alert("Error loading pie charts!");
@@ -30,6 +36,24 @@ const Plots = () => {
     fetchLineCharts();
     fetchPieCharts();
   }, []);
+
+  const handleDeleteLineChart = async (id) => {
+    try {
+      await deleteLineChart(id);
+      window.location = "/plots";
+    } catch (error) {
+      alert("Error deleting line chart!");
+    }
+  };
+
+  const handleDeletePieChart = async (id) => {
+    try {
+      await deletePieChart(id);
+      window.location = "/plots";
+    } catch (error) {
+      alert("Error deleting pie chart!");
+    }
+  };
 
   return (
     <section className="container plots-container">
@@ -62,7 +86,7 @@ const Plots = () => {
         <table className="plots-table">
           <tbody>
             {lineCharts.map((chart, index) => (
-              <tr key={chart._id}>
+              <tr key={chart._id + index}>
                 <td>{index + 1}.</td>
                 <td>
                   <strong>
@@ -72,10 +96,26 @@ const Plots = () => {
                   </strong>
                 </td>
                 <td>{chart.description}</td>
+                <td className="cell-icons">
+                  <button
+                    onClick={() => navigate(`/line/${chart._id}`)}
+                    className="btn-icon"
+                  >
+                    <LuEdit2 size={20} />
+                  </button>
+
+                  <button
+                    onClick={() => handleDeleteLineChart(chart._id)}
+                    className="btn-icon"
+                  >
+                    <FiDelete color="red" size={20} />
+                  </button>
+                </td>
               </tr>
             ))}
+
             {pieCharts.map((chart, index) => (
-              <tr key={chart._id}>
+              <tr key={chart._id + index}>
                 <td>{lineCharts.length + index + 1}.</td>
                 <td>
                   <strong>
@@ -83,6 +123,21 @@ const Plots = () => {
                   </strong>
                 </td>
                 <td>{chart.description}</td>
+                <td className="cell-icons">
+                  <button
+                    onClick={() => navigate(`/pie/${chart._id}`)}
+                    className="btn-icon"
+                  >
+                    <LuEdit2 size={20} />
+                  </button>
+
+                  <button
+                    onClick={() => handleDeletePieChart(chart._id)}
+                    className="btn-icon"
+                  >
+                    <FiDelete color="red" size={20} />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
