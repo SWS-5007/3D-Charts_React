@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function useForm(initialData, schema) {
   const [data, setData] = useState(initialData);
-  const [errors, setErrors] = useState({ lines: [{}] });
+  const [errors, setErrors] = useState({ lines: [{}], values: [{}] });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,10 +40,16 @@ export default function useForm(initialData, schema) {
   };
 
   const validate = () => {
-    const { error } = Joi.validate(data, schema, { abortEarly: false });
-    if (!error) return;
+    const options = { abortEarly: false };
+    const { error } = Joi.validate(data, schema, options);
+    if (!error) return null;
 
-    console.log(error);
+    const errors = {};
+    for (let item of error.details) {
+      errors[item.path[0]] = item.message;
+    }
+
+    return errors;
   };
 
   return {

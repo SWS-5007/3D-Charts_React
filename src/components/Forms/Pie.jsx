@@ -9,6 +9,19 @@ import {
 import useForm from "../../hooks/useForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Joi from "joi-browser";
+
+const pieValueValidationSchema = {
+  value: Joi.number().required(),
+  label: Joi.string().max(55).required(),
+  color: Joi.string().max(55).required(),
+};
+
+const schema = {
+  name: Joi.string().max(55).required(),
+  description: Joi.string().allow("").max(155).required(),
+  values: Joi.array().items(pieValueValidationSchema).required(),
+};
 
 const Pie = () => {
   const { id } = useParams();
@@ -95,6 +108,7 @@ const Pie = () => {
           name="name"
           placeholder="Plot Name"
           className="input-primary"
+          error={errors["name"]}
         />
         <Input
           onChange={handleChange}
@@ -102,6 +116,7 @@ const Pie = () => {
           name="description"
           placeholder="Description"
           className="input-primary"
+          error={errors["description"]}
         />
       </div>
 
@@ -117,6 +132,7 @@ const Pie = () => {
               name="label"
               placeholder="Label"
               className="input-primary"
+              error={errors['values']["name"]}
             />
             <Input
               onChange={(e) => handleArrayChange("values", index, e)}

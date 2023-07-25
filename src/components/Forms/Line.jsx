@@ -31,8 +31,15 @@ const schema = {
 const Line = () => {
   const { id } = useParams();
   const [numberOfLines, setNumberOfLines] = useState(1);
-  const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
-    useForm(initialData, schema);
+  const {
+    data,
+    setData,
+    errors,
+    setErrors,
+    handleChange,
+    handleArrayChange,
+    validate,
+  } = useForm(initialData, schema);
 
   const fetchLineChart = async (id) => {
     try {
@@ -60,6 +67,13 @@ const Line = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const errors = validate();
+    setErrors(errors || {});
+    for (let error in errors) {
+      toast.error(`${error}: ${errors[error]}`);
+    }
+    if (errors) return;
 
     const lineChart = { ...data };
     const id = lineChart._id;
