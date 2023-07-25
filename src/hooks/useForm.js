@@ -3,14 +3,16 @@ import { useState } from "react";
 
 export default function useForm(initialData, schema) {
   const [data, setData] = useState(initialData);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({ lines: [{}] });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (schema) {
-      const schema = { [name]: schema[name] };
-
-      const { error } = Joi.validate({ [name]: value }, schema);
+      const propertySchema = Joi.object({ [name]: schema[name] });
+      console.log(propertySchema);
+      const { error } = Joi.validate({ [name]: value }, propertySchema, {
+        abortEarly: false,
+      });
       if (error) errors[name] = error.details[0].message;
       else delete errors[name];
     }
@@ -20,8 +22,18 @@ export default function useForm(initialData, schema) {
     setData(copiedData);
   };
 
-  const handleArrayChange = (array, index, event) => {
+  const handleArrayChange = (array, index, event, schema) => {
     const { name, value } = event.target;
+
+    const propertySchema = Joi.object({ [name]: schema[name] });
+    const { error } = Joi.validate({ [name]: value }, propertySchema, {
+      abortEarly: false,
+    });
+    if (error) errors[array][index][name] = error.details[0].message;
+    else delete errors[array][index][name];
+
+    console.log(errors);
+
     const copiedData = { ...data };
     copiedData[array][index][name] = value;
     setData(copiedData);

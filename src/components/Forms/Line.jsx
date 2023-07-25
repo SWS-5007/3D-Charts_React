@@ -10,12 +10,29 @@ import {
   initialData,
   updateLineChart,
 } from "../../services/line-chart";
+import { toast } from "react-toastify";
+import Joi from "joi-browser";
+
+const lineValidationSchema = {
+  label: Joi.string().required().max(55).label("Label"),
+  color: Joi.string().required().max(55).label("Color"),
+  vertices: Joi.string().required().max(5000).label("Vertices"),
+};
+
+const schema = {
+  name: Joi.string().max(55).required().label("Name"),
+  description: Joi.string().allow("").max(155).label("Description"),
+  labelX: Joi.string().allow("").max(5000).label("X-Axis Label"),
+  labelY: Joi.string().allow("").max(5000).label("Y-Axis Label"),
+  labelZ: Joi.string().allow("").max(5000).label("Z-Axis Label"),
+  lines: Joi.array().items(lineValidationSchema).required().label("Lines"),
+};
 
 const Line = () => {
   const { id } = useParams();
   const [numberOfLines, setNumberOfLines] = useState(1);
   const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
-    useForm(initialData);
+    useForm(initialData, schema);
 
   const fetchLineChart = async (id) => {
     try {
@@ -23,7 +40,7 @@ const Line = () => {
       setData(chart);
       setNumberOfLines(chart.lines.length);
     } catch (error) {
-      alert("The Chart ID is not valid!");
+      toast.error("The Chart ID is not valid");
     }
   };
 
@@ -35,7 +52,7 @@ const Line = () => {
     for (let i = 0; i < data.lines.length; i++) handleCreateVertices(i);
 
     const copiedData = { ...data };
-    copiedData.lines.push({ label: "", color: "", vertices: [] });
+    copiedData.lines.push({ label: "", color: "#000", vertices: [] });
     setData(copiedData);
 
     setNumberOfLines((numberOfLines) => numberOfLines + 1);
@@ -58,7 +75,11 @@ const Line = () => {
         window.location = "/plot/" + chart._id + "/?type=line";
       }
     } catch (error) {
-      console.log(error);
+      if (error.response.status === 400) {
+        const copiedErrors = { ...errors };
+        copiedErrors["name"] = error.response.data;
+        setErrors(copiedErrors);
+      }
     }
   };
 
@@ -100,6 +121,7 @@ const Line = () => {
           onChange={handleChange}
           className="input-primary"
           value={data["name"]}
+          error={errors["name"]}
         />
         <Input
           name="description"
@@ -107,6 +129,7 @@ const Line = () => {
           onChange={handleChange}
           className="input-primary"
           value={data["description"]}
+          error={errors["description"]}
         />
       </div>
 
@@ -114,25 +137,28 @@ const Line = () => {
         <h3 className="form-content-heading heading-optional">Labels</h3>
         <span>Separate each label with a comma i.e. “,”</span>
         <Input
-          name="labelsX"
-          placeholder="X-Axis Labels"
+          name="labelX"
+          placeholder="X-Axis Label"
           onChange={handleChange}
           className="input-primary input-max"
-          value={data["labelsX"]}
+          value={data["labelX"]}
+          error={errors["labelX"]}
         />
         <Input
-          name="labelsY"
-          placeholder="Y-Axis Labels"
+          name="labelY"
+          placeholder="Y-Axis Label"
           onChange={handleChange}
           className="input-primary input-max"
-          value={data["labelsY"]}
+          value={data["labelY"]}
+          error={errors["labelY"]}
         />
         <Input
-          name="labelsZ"
-          placeholder="Z-Axis Labels"
+          name="labelZ"
+          placeholder="Z-Axis Label"
           onChange={handleChange}
           className="input-primary input-max"
-          value={data["labelsZ"]}
+          value={data["labelZ"]}
+          error={errors["labelZ"]}
         />
       </div>
 
@@ -144,11 +170,14 @@ const Line = () => {
               <h3 className="form-content-heading">Plot {index + 1}</h3>
 
               <Input
-                onChange={(event) => handleArrayChange("lines", index, event)}
+                onChange={(event) =>
+                  handleArrayChange("lines", index, event, lineValidationSchema)
+                }
                 name="label"
                 placeholder="Label"
                 className="input-primary"
                 value={data["lines"][index]["label"]}
+                error={errors["lines"][index]["label"]}
               />
 
               <div className="color-input">
@@ -158,8 +187,15 @@ const Line = () => {
                     className="color"
                   />
                 </div>
-                <Input
-                  onChange={(event) => handleArrayChange("lines", index, event)}
+                <input
+                  onChange={(event) =>
+                    handleArrayChange(
+                      "lines",
+                      index,
+                      event,
+                      lineValidationSchema
+                    )
+                  }
                   name="color"
                   placeholder="Color"
                   type="color"
@@ -173,7 +209,9 @@ const Line = () => {
               <h3 className="form-content-heading">Values</h3>
               <span>Separate each value in a vertex with a comma i.e. “,”</span>
               <Input
-                onChange={(event) => handleArrayChange("lines", index, event)}
+                onChange={(event) =>
+                  handleArrayChange("lines", index, event, lineValidationSchema)
+                }
                 name="vertices"
                 placeholder="Vertices (x, y, z)"
                 className="input-primary input-max"

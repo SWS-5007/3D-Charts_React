@@ -274,6 +274,10 @@ input {
   border: 1px solid rgba(0, 0, 0, 0.158);
 }
 
+.input-container {
+  margin: 1.8rem 0;
+}
+
 .input-primary {
   border: 1px solid #c1c1c1;
   border-radius: 5px;
@@ -281,13 +285,17 @@ input {
   width: 100%;
   padding: 0.8rem 2rem;
   display: block;
-  margin: 1.8rem 0;
   background-color: transparent;
 }
 
+.input-error {
+  margin-top: 1rem;
+  color: rgb(215, 21, 21);
+}
+
 .input-max {
-  max-width: 100%;
   width: 100%;
+  max-width: 100%;
 }
 
 .color-input {
@@ -351,6 +359,17 @@ form {
 
 .vertices-data {
   margin: 4rem 0 6rem;
+}
+
+.not-found {
+  margin: 8rem auto;
+  text-align: center;
+}
+.not-found h1 {
+  margin-bottom: 2.8rem;
+}
+.not-found a {
+  font-size: 1.4rem;
 }
 
 /*# sourceMappingURL=styles.css.map */

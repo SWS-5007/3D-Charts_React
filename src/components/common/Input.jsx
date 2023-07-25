@@ -10,7 +10,7 @@ const Input = ({
   ...data
 }) => {
   return (
-    <>
+    <div className="input-container">
       <input
         name={name}
         placeholder={placeholder}
@@ -19,7 +19,8 @@ const Input = ({
         className="input-primary"
         value={value}
       />
-    </>
+      {error && <span className="input-error">{error}</span>}
+    </div>
   );
 };
 

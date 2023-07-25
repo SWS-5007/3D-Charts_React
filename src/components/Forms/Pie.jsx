@@ -8,6 +8,7 @@ import {
 } from "../../services/pie-chart";
 import useForm from "../../hooks/useForm";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Pie = () => {
   const { id } = useParams();
@@ -23,13 +24,13 @@ const Pie = () => {
       setData(chart);
       setValuesCount(chart.values.length);
     } catch (error) {
-      navigate("/pie/new");
+      toast.error("Chart with given ID was not found");
     }
   };
 
   useEffect(() => {
     if (id !== "new") fetchPieChart();
-  }, []);
+  }, [id]);
 
   const handleValuesCount = () => {
     const copiedData = { ...data };
@@ -43,7 +44,7 @@ const Pie = () => {
 
     const chart = { ...data };
     const id = chart._id;
-    console.log(chart);
+
     try {
       if (id) {
         delete chart._id;

@@ -3,10 +3,10 @@ import http from "./http";
 export const initialData = {
   name: "",
   description: "",
-  labelsX: "",
-  labelsY: "",
-  labelsZ: "",
-  lines: [{ label: "", color: "", vertices: "" }],
+  labelX: "",
+  labelY: "",
+  labelZ: "",
+  lines: [{ label: "", color: "#000000", vertices: "" }],
 };
 
 export function getLineCharts() {

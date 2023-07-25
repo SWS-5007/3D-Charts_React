@@ -56,7 +56,8 @@ const PlotContainer = () => {
 
   useEffect(() => {
     if (type === "line") fetchLineChart();
-    if (type === "pie") fetchPieChart();
+    else if (type === "pie") fetchPieChart();
+    else window.location = "/not-found";
   }, []);
 
   const handleShowVertices = (event) => {

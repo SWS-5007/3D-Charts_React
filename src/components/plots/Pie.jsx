@@ -12,7 +12,6 @@ const Pie = ({ data, fontSize, cameraPosition }) => {
   let thetaStart = 0;
 
   useEffect(() => {
-    console.log("hello");
     camera.position.set(...cameraPosition);
   }, [cameraPosition]);
 
