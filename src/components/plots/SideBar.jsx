@@ -9,6 +9,8 @@ const SideBar = ({
   lineChart,
   pieChart,
   onAlignAxis,
+  showAxisLabel,
+  onShowAxisLabel,
 }) => {
   const total = pieChart.values.reduce((a, b) => (a += b.value), 0);
 
@@ -44,10 +46,25 @@ const SideBar = ({
           </div>
           <input
             checked={showVertices}
-            onChange={(event) => onShowVertices(event)}
+            onChange={onShowVertices}
             type="checkbox"
             name="showVertices"
             id="showVertices"
+          />
+        </div>
+      )}
+      {!pieChart._id && (
+        <div className="plot-setting">
+          <div>
+            <h4 className="text-lighter">Axis Labels</h4>
+            <span>Shows the labels of axes</span>
+          </div>
+          <input
+            checked={showAxisLabel}
+            onChange={onShowAxisLabel}
+            type="checkbox"
+            name="showAxisLabel"
+            id="showAxisLabel"
           />
         </div>
       )}

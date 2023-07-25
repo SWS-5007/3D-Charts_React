@@ -6,7 +6,13 @@ import React, { useEffect, useState } from "react";
 import { handleCreateVertices } from "../../services/utils";
 import Axis from "../axes/Axis";
 
-const Line = ({ fontSize, showVertices, lineChart, cameraPosition }) => {
+const Line = ({
+  fontSize,
+  showVertices,
+  lineChart,
+  cameraPosition,
+  showAxisLabel,
+}) => {
   const { scene, camera } = useThree();
   const [points, setPoints] = useState([]);
 
@@ -51,6 +57,44 @@ const Line = ({ fontSize, showVertices, lineChart, cameraPosition }) => {
     <>
       <OrbitControls />
       <Axis />
+      {showAxisLabel && (
+        <>
+          {" "}
+          <Html position-x={10}>
+            <p
+              style={{
+                color: "#858585",
+                fontSize: `${fontSize}rem`,
+                width: "300px",
+              }}
+            >
+              {lineChart.labelX}
+            </p>
+          </Html>
+          <Html position-y={10}>
+            <p
+              style={{
+                color: "#858585",
+                fontSize: `${fontSize}rem`,
+                width: "300px",
+              }}
+            >
+              {lineChart.labelY}
+            </p>
+          </Html>
+          <Html position-z={10}>
+            <p
+              style={{
+                color: "#858585",
+                fontSize: `${fontSize}rem`,
+                width: "300px",
+              }}
+            >
+              {lineChart.labelZ}
+            </p>
+          </Html>
+        </>
+      )}
       <>
         {points.map((vertex, index) => (
           <>

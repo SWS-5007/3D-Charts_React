@@ -256,6 +256,14 @@ td {
 .plot-container {
   display: grid;
   grid-template: 1fr / 1fr 320px;
+  position: relative;
+}
+
+.return {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 1;
 }
 
 aside {
@@ -411,3 +419,5 @@ form {
     font-size: 1.4rem;
   }
 }
+
+// Other

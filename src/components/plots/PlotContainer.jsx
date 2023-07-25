@@ -1,5 +1,5 @@
 import { Canvas, useThree } from "@react-three/fiber";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Line from "./Line";
 import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
@@ -13,6 +13,7 @@ import {
   initialData as pieChartInitialData,
 } from "../../services/pie-chart";
 import Pie from "../plots/Pie";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const PlotContainer = () => {
   const [fontSize, setFontSize] = useState(1.4);
@@ -21,7 +22,7 @@ const PlotContainer = () => {
   const [lineChart, setLineChart] = useState(lineChartInitialData);
   const [pieChart, setPieChart] = useState(pieChartInitialData);
   const { type } = queryString.parse(window.location.search);
-  const { alignAxis, setAlignAxis } = useState("");
+  const [showAxisLabel, setShowAxisLabels] = useState(false);
   const [cameraPosition, setCameraPosition] = useState([5, 6, 10]);
 
   const handleAlignAxis = (e) => {
@@ -64,6 +65,10 @@ const PlotContainer = () => {
     setShowVertices(event.target.checked);
   };
 
+  const handleShowAxisLabel = (event) => {
+    setShowAxisLabels(event.target.checked);
+  };
+
   const handleFontSize = (event) => {
     setFontSize(event.target.value);
   };
@@ -87,9 +92,13 @@ const PlotContainer = () => {
   return (
     <>
       <section className="plot-container">
+        <Link to="/plots" className="return">
+          <AiOutlineArrowLeft size={20} color="black" />
+        </Link>
         <Canvas camera={{ position: cameraPosition }}>
           {type === "line" && (
             <Line
+              showAxisLabel={showAxisLabel}
               cameraPosition={cameraPosition}
               lineChart={lineChart}
               fontSize={fontSize}
@@ -115,6 +124,8 @@ const PlotContainer = () => {
           showVertices={showVertices}
           onCaptureImage={handleCaptureImage}
           onAlignAxis={handleAlignAxis}
+          showAxisLabel={showAxisLabel}
+          onShowAxisLabel={handleShowAxisLabel}
         />
       </section>
     </>
