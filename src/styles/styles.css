@@ -4,9 +4,9 @@ html {
 
 * {
   box-sizing: border-box;
+  font-family: "Poppins";
   margin: 0;
   padding: 0;
-  font-family: "Poppins";
 }
 
 body {
@@ -15,10 +15,10 @@ body {
 }
 
 .container {
-  width: 100%;
   display: block;
   margin: 4rem auto;
   max-width: 1080px;
+  width: 100%;
 }
 
 canvas {
@@ -28,18 +28,18 @@ canvas {
 }
 
 h1 {
-  font-size: 3.2rem;
   color: #252525;
+  font-size: 3.2rem;
 }
 
 h2 {
-  font-size: 2.4rem;
   color: #252525;
+  font-size: 2.4rem;
 }
 
 h3 {
-  font-size: 1.5rem;
   color: black;
+  font-size: 1.5rem;
 }
 
 h4 {
@@ -47,8 +47,8 @@ h4 {
 }
 
 p {
-  font-size: 1.2rem;
   color: #707070;
+  font-size: 1.2rem;
 }
 
 .text-lighter {
@@ -57,8 +57,8 @@ p {
 
 a {
   color: #707070;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .link-primary {
@@ -67,20 +67,21 @@ a {
 
 button,
 .btn {
-  border: none;
-  padding: 0.4rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
   background-color: #252525;
+  border-radius: 8px;
+  border: none;
   color: white;
-  font-weight: bold;
+  cursor: pointer;
   font-size: 1.3rem;
+  font-weight: bold;
+  padding: 0.4rem 1.2rem;
 }
 
 .btn-flex {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   gap: 0.6rem;
 }
 
@@ -98,20 +99,21 @@ button,
 .btn-clickable {
   background-color: transparent;
   color: #707070;
-  text-align: left;
-  font-weight: normal;
   font-size: 1.2rem;
+  font-weight: normal;
   padding: 0;
+  text-align: left;
 }
 
 .btn-icon {
-  background-color: transparent;
-  padding: 1rem;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 50%;
   color: black;
+  padding: 1rem;
 }
 
 .btn-icon:hover {
@@ -119,11 +121,12 @@ button,
 }
 
 nav {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   padding: 1.2rem 1.4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid #c1c1c1;
 }
 
@@ -150,22 +153,22 @@ nav {
 }
 .create-new-plot .chart-type {
   display: flex;
-  gap: 1.4rem;
   flex-direction: column;
+  gap: 1.4rem;
 }
 .create-new-plot .chart-logo {
+  border-radius: 12px;
   border: 1px solid #c1c1c1;
   padding: 4rem;
-  border-radius: 12px;
 }
 
 .footer-text {
-  position: absolute;
   bottom: 4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
   font-weight: bold;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
 }
 
 .grid {
@@ -173,8 +176,8 @@ nav {
 }
 
 .grid-1x4 {
-  grid-template: repeat(1, 1fr)/repeat(4, 1fr);
   gap: 6rem;
+  grid-template: repeat(1, 1fr)/repeat(4, 1fr);
 }
 
 .plots-container {
@@ -182,9 +185,10 @@ nav {
 }
 
 .plots-header {
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   gap: 2rem;
 }
 
@@ -195,32 +199,33 @@ nav {
 }
 
 .plots-table {
-  width: 100%;
-  font-size: 1.4rem;
-  color: #707070;
   border-collapse: collapse;
+  color: #707070;
+  font-size: 1.4rem;
+  width: 100%;
 }
 
 td {
+  border-bottom: 1px solid #c1c1c1;
   min-width: 60px;
   padding: 1.8rem 1rem;
-  border-bottom: 1px solid #c1c1c1;
 }
 
 .cell-icons {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   gap: 2rem;
 }
 
 .plots-footer {
-  margin-top: 8rem;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 6rem;
+  margin-top: 8rem;
 }
 
 .plot-container {
@@ -230,56 +235,58 @@ td {
 }
 
 .return {
+  left: 2rem;
   position: absolute;
   top: 2rem;
-  left: 2rem;
   z-index: 1;
 }
 
 aside {
-  width: 100%;
   border-left: 1px solid #c1c1c1;
   padding: 1rem 1.4rem;
+  width: 100%;
 }
 
 .aside-heading {
-  margin-top: 2rem;
   margin-bottom: 1.8rem;
+  margin-top: 2rem;
 }
 
 .plot-setting {
-  margin: 1.8rem 0;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1.8rem 0;
 }
 
 .icon-text-container {
-  display: flex;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   gap: 1.2rem;
 }
 
 .color {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
   background-color: red;
   border-radius: 50%;
+  display: inline-block;
+  height: 16px;
+  width: 16px;
 }
 
 input {
-  outline: none;
   border: none;
+  outline: none;
 }
 
 .input-chart {
-  outline: none;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.158);
   border: none;
   max-width: 100px;
   padding: 0.3rem 1.2rem;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.158);
 }
 
 .input-container {
@@ -287,68 +294,71 @@ input {
 }
 
 .input-primary {
-  border: 1px solid #c1c1c1;
-  border-radius: 5px;
-  max-width: 320px;
-  width: 100%;
-  padding: 0.8rem 2rem;
-  display: block;
   background-color: transparent;
+  border-radius: 5px;
+  border: 1px solid #c1c1c1;
+  display: block;
+  max-width: 320px;
+  padding: 0.8rem 2rem;
+  width: 100%;
 }
 
 .input-error {
-  margin-top: 1rem;
   color: rgb(215, 21, 21);
+  margin-top: 1rem;
 }
 
 .input-max {
-  width: 100%;
   max-width: 100%;
+  width: 100%;
 }
 
 .color-input {
-  max-width: 320px;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
-  border: 1px solid #c1c1c1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   border-radius: 5px;
+  border: 1px solid #c1c1c1;
+  max-width: 320px;
 }
 .color-input input {
-  border: none;
-  margin: 0;
   border-left: 1px solid #c1c1c1;
   border-radius: 0;
+  border: none;
+  margin: 0;
 }
 
 .color-container {
+  height: 12px;
   margin: 13px 1.4rem;
   width: 12px;
-  height: 12px;
 }
 .color-container .color {
-  width: 12px;
-  height: 12px;
   background-color: black;
   border-radius: 50%;
+  height: 12px;
+  width: 12px;
 }
 
 form {
-  max-width: 800px;
   display: block;
   margin: 4rem auto;
+  max-width: 800px;
 }
 
 .form-header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .form-heading {
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start center;
   gap: 1.4rem;
 }
 
@@ -358,11 +368,11 @@ form {
 
 .heading-optional::after {
   content: "(Optional)";
-  font-size: 0.8rem;
-  position: relative;
-  left: 10px;
-  font-weight: 100;
   color: rgb(234, 63, 63);
+  font-size: 0.8rem;
+  font-weight: 100;
+  left: 10px;
+  position: relative;
 }
 
 .vertices-data {

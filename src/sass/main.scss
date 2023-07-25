@@ -1,36 +1,45 @@
 $fontFamily: "Poppins";
 
 $colorBackground: #fff;
-$colorDarkest: black;
-$colorDarker: #252525;
 $colorDark: #707070;
-$colorPrimary: dodgerblue;
-$colorLightest: white;
-$colorLighter: #dedede;
+$colorDarker: #252525;
+$colorDarkest: black;
 $colorLight: #c1c1c1;
+$colorLighter: #dedede;
+$colorLightest: white;
+$colorPrimary: dodgerblue;
 
+// Mixins
+
+@mixin flex($jc: center, $ai: center, $fd: row) {
+  align-items: $ai;
+  display: flex;
+  flex-direction: $fd;
+  justify-content: $jc;
+}
+
+// Main
 html {
   font-size: 62.5%;
 }
 
 * {
   box-sizing: border-box;
+  font-family: $fontFamily;
   margin: 0;
   padding: 0;
-  font-family: $fontFamily;
 }
 
 body {
   background-color: $colorBackground;
   box-sizing: border-box;
-  // overflow: hidden;
 }
 
 .container {
-  width: 100%;
   display: block;
   margin: 4rem auto;
   max-width: 1080px;
+  width: 100%;
 }
 
 canvas {
@@ -42,18 +51,18 @@ canvas {
 // Typography
 
 h1 {
-  font-size: 3.2rem;
   color: $colorDarker;
+  font-size: 3.2rem;
 }
 
 h2 {
-  font-size: 2.4rem;
   color: $colorDarker;
+  font-size: 2.4rem;
 }
 
 h3 {
-  font-size: 1.5rem;
   color: $colorDarkest;
+  font-size: 1.5rem;
 }
 
 h4 {
@@ -61,8 +70,8 @@ h4 {
 }
 
 p {
-  font-size: 1.2rem;
   color: $colorDark;
+  font-size: 1.2rem;
 }
 
 .text-lighter {
@@ -73,8 +82,8 @@ p {
 
 a {
   color: $colorDark;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .link-primary {
@@ -85,20 +94,18 @@ a {
 
 button,
 .btn {
-  border: none;
-  padding: 0.4rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
   background-color: $colorDarker;
+  border-radius: 8px;
+  border: none;
   color: white;
-  font-weight: bold;
+  cursor: pointer;
   font-size: 1.3rem;
+  font-weight: bold;
+  padding: 0.4rem 1.2rem;
 }
 
 .btn-flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex(center, center);
   gap: 0.6rem;
 }
 
@@ -116,20 +123,19 @@ button,
 .btn-clickable {
   background-color: transparent;
   color: $colorDark;
-  text-align: left;
-  font-weight: normal;
   font-size: 1.2rem;
+  font-weight: normal;
   padding: 0;
+  text-align: left;
 }
 
 .btn-icon {
+  @include flex(center, center);
+
   background-color: transparent;
-  padding: 1rem;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: black;
+  padding: 1rem;
 }
 
 .btn-icon:hover {
@@ -139,11 +145,10 @@ button,
 // Navbar
 
 nav {
+  @include flex(space-between, center);
+
   width: 100%;
   padding: 1.2rem 1.4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid $colorLight;
 }
 
@@ -161,10 +166,7 @@ nav {
 // Create New Plot Page
 
 .create-new-plot {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include flex(center, center, column);
   text-align: center;
 
   .grid-plot {
@@ -173,24 +175,24 @@ nav {
 
   .chart-type {
     display: flex;
-    gap: 1.4rem;
     flex-direction: column;
+    gap: 1.4rem;
   }
 
   .chart-logo {
+    border-radius: 12px;
     border: 1px solid $colorLight;
     padding: 4rem;
-    border-radius: 12px;
   }
 }
 
 .footer-text {
-  position: absolute;
   bottom: 4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
   font-weight: bold;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
 }
 
 // Grids
@@ -200,8 +202,8 @@ nav {
 }
 
 .grid-1x4 {
-  grid-template: repeat(1, 1fr) / repeat(4, 1fr);
   gap: 6rem;
+  grid-template: repeat(1, 1fr) / repeat(4, 1fr);
 }
 
 // Plots
@@ -211,9 +213,7 @@ nav {
 }
 
 .plots-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 2rem;
 }
 
@@ -224,32 +224,28 @@ nav {
 }
 
 .plots-table {
-  width: 100%;
-  font-size: 1.4rem;
-  color: $colorDark;
   border-collapse: collapse;
+  color: $colorDark;
+  font-size: 1.4rem;
+  width: 100%;
 }
 
 td {
+  border-bottom: 1px solid $colorLight;
   min-width: 60px;
   padding: 1.8rem 1rem;
-  border-bottom: 1px solid $colorLight;
 }
 
 .cell-icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex(center, center);
   gap: 2rem;
 }
 
 .plots-footer {
-  margin-top: 8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  @include flex(center, center, column);
+
   gap: 6rem;
+  margin-top: 8rem;
 }
 
 // Sidebars
@@ -260,58 +256,54 @@ td {
 }
 
 .return {
+  left: 2rem;
   position: absolute;
   top: 2rem;
-  left: 2rem;
   z-index: 1;
 }
 
 aside {
-  width: 100%;
   border-left: 1px solid $colorLight;
   padding: 1rem 1.4rem;
+  width: 100%;
 }
 
 .aside-heading {
-  margin-top: 2rem;
   margin-bottom: 1.8rem;
+  margin-top: 2rem;
 }
 
 .plot-setting {
+  @include flex(space-between, center);
   margin: 1.8rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .icon-text-container {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 1.2rem;
 }
 
 .color {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
   background-color: red;
   border-radius: 50%;
+  display: inline-block;
+  height: 16px;
+  width: 16px;
 }
 
 // Inputs
 
 input {
-  outline: none;
   border: none;
+  outline: none;
 }
 
 .input-chart {
-  outline: none;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.158);
   border: none;
   max-width: 100px;
   padding: 0.3rem 1.2rem;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.158);
 }
 
 .input-container {
@@ -319,72 +311,67 @@ input {
 }
 
 .input-primary {
-  border: 1px solid $colorLight;
-  border-radius: 5px;
-  max-width: 320px;
-  width: 100%;
-  padding: 0.8rem 2rem;
-  display: block;
   background-color: transparent;
+  border-radius: 5px;
+  border: 1px solid $colorLight;
+  display: block;
+  max-width: 320px;
+  padding: 0.8rem 2rem;
+  width: 100%;
 }
 
 .input-error {
-  margin-top: 1rem;
   color: rgb(215, 21, 21);
+  margin-top: 1rem;
 }
 
 .input-max {
-  width: 100%;
   max-width: 100%;
+  width: 100%;
 }
 
 .color-input {
-  max-width: 320px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  border: 1px solid $colorLight;
+  @include flex(flex-start, center);
+
   border-radius: 5px;
+  border: 1px solid $colorLight;
+  max-width: 320px;
 
   input {
-    border: none;
-    margin: 0;
     border-left: 1px solid $colorLight;
     border-radius: 0;
+    border: none;
+    margin: 0;
   }
 }
 
 .color-container {
+  height: 12px;
   margin: (38px - 12px) / 2 1.4rem;
   width: 12px;
-  height: 12px;
 
   .color {
-    width: 12px;
-    height: 12px;
     background-color: black;
     border-radius: 50%;
+    height: 12px;
+    width: 12px;
   }
 }
 
 // Forms
 
 form {
-  max-width: 800px;
   display: block;
   margin: 4rem auto;
+  max-width: 800px;
 }
 
 .form-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(space-between, center);
 }
 
 .form-heading {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  @include flex(flex-start center);
   gap: 1.4rem;
 }
 
@@ -394,11 +381,12 @@ form {
 
 .heading-optional::after {
   content: "(Optional)";
-  font-size: 0.8rem;
-  position: relative;
-  left: 10px;
-  font-weight: 100;
+
   color: rgb(234, 63, 63);
+  font-size: 0.8rem;
+  font-weight: 100;
+  left: 10px;
+  position: relative;
 }
 
 .vertices-data {
@@ -419,5 +407,3 @@ form {
     font-size: 1.4rem;
   }
 }
-
-// Other
