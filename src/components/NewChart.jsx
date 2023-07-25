@@ -11,7 +11,7 @@ const NewChart = () => {
         </header>
 
         <div className="grid grid-1x4 grid-plot">
-          <Link to="/plot/new?type=line" className="chart-type">
+          <Link to="/line/new" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"
@@ -32,7 +32,7 @@ const NewChart = () => {
             <span>Line</span>
           </Link>
 
-          <Link to="/plot/new?type=pie" className="chart-type">
+          <Link to="/pie/new" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"
@@ -58,7 +58,7 @@ const NewChart = () => {
             <span>Pie</span>
           </Link>
 
-          <Link to="/plot/new?type=bar" className="chart-type">
+          <Link to="/plot/new" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"
@@ -76,7 +76,7 @@ const NewChart = () => {
             <span>Bar</span>
           </Link>
 
-          <Link to="/plot/new?type=scatter" className="chart-type">
+          <Link to="/lines/new" className="chart-type">
             <div className="chart-logo">
               <svg
                 width="40"

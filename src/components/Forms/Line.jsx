@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { handleCreateVertices, verticesToString } from "../../services/utils";
 import Input from "../common/Input";
 import useForm from "../../hooks/useForm";
-import queryString from "query-string";
 import {
   createLineChart,
   getLineChart,
@@ -12,7 +12,7 @@ import {
 } from "../../services/line-chart";
 
 const Line = () => {
-  const { edit, id } = queryString.parse(window.location.search);
+  const { id } = useParams();
   const [numberOfLines, setNumberOfLines] = useState(1);
   const { data, setData, errors, setErrors, handleChange, handleArrayChange } =
     useForm(initialData);
@@ -28,10 +28,7 @@ const Line = () => {
   };
 
   useEffect(() => {
-    if (edit && id) {
-      fetchLineChart(id);
-      console.log(edit, id);
-    }
+    if (id !== "new") fetchLineChart(id);
   }, []);
 
   const addLine = () => {
@@ -47,26 +44,19 @@ const Line = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { edit, id } = queryString.parse(window.location.search);
-
-    if (edit && id) {
-      try {
-        const copiedData = { ...data };
-        delete copiedData._id;
-        delete copiedData.__v;
-        console.log(copiedData);
-
-        const { data: chart } = await updateLineChart(id, copiedData);
-        // window.location = "/plot/" + chart._id + "/?type=line";
-      } catch (error) {
-        console.log(error);
-        return;
-      }
-    }
+    const lineChart = { ...data };
+    const id = lineChart._id;
 
     try {
-      const { data: chart } = await createLineChart(data);
-      window.location = "/plot/" + chart._id + "/?type=line";
+      if (id) {
+        delete lineChart._id;
+        delete lineChart.__v;
+        await updateLineChart(id, lineChart);
+        window.location = "/plot/" + id + "/?type=line";
+      } else {
+        const { data: chart } = await createLineChart(data);
+        window.location = "/plot/" + chart._id + "/?type=line";
+      }
     } catch (error) {
       console.log(error);
     }
