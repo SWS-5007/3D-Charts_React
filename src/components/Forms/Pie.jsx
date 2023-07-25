@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import Joi from "joi-browser";
+import React, { useCallback, useEffect, useState } from "react";
+
 import Input from "../common/Input";
+import useForm from "../../hooks/useForm";
 import {
   createPieChart,
   getPieChart,
   initialData,
   updatePieChart,
 } from "../../services/pie-chart";
-import useForm from "../../hooks/useForm";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import Joi from "joi-browser";
 
 const pieValueValidationSchema = {
-  value: Joi.number().required().label("Value"),
-  label: Joi.string().max(55).required().label("Label"),
   color: Joi.string().max(55).required().label("Color"),
+  label: Joi.string().max(55).required().label("Label"),
+  value: Joi.number().required().label("Value"),
 };
 
 const schema = {
-  name: Joi.string().max(55).required().label("Name"),
   description: Joi.string().allow("").max(155).required().label("Description"),
+  name: Joi.string().max(55).required().label("Name"),
   values: Joi.array()
     .items(pieValueValidationSchema)
     .required()
@@ -32,15 +33,15 @@ const Pie = () => {
   const [valuesCount, setValuesCount] = useState(1);
   const {
     data,
-    setData,
     errors,
-    setErrors,
-    handleChange,
     handleArrayChange,
+    handleChange,
+    setData,
+    setErrors,
     validate,
   } = useForm(initialData, schema);
 
-  const fetchPieChart = async () => {
+  const fetchPieChart = useCallback(async () => {
     try {
       const { data: chart } = await getPieChart(id);
       delete chart.__v;
@@ -49,11 +50,11 @@ const Pie = () => {
     } catch (error) {
       toast.error("Chart with given ID was not found");
     }
-  };
+  }, [id, setData]);
 
   useEffect(() => {
     if (id !== "new") fetchPieChart();
-  }, [id]);
+  }, [id, fetchPieChart]);
 
   const handleValuesCount = () => {
     const copiedData = { ...data };

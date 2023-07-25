@@ -1,5 +1,5 @@
 import { Html, OrbitControls } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import React, { useEffect, useState } from "react";
 
@@ -7,19 +7,18 @@ import { handleCreateVertices } from "../../services/utils";
 import Axis from "../axes/Axis";
 
 const Line = ({
-  fontSize,
-  showVertices,
-  lineChart,
   cameraPosition,
+  fontSize,
+  lineChart,
   showAxisLabel,
+  showVertices,
 }) => {
-  const { scene, camera } = useThree();
   const [points, setPoints] = useState([]);
+  const { scene, camera } = useThree();
 
   useEffect(() => {
-    console.log("hello");
     camera.position.set(...cameraPosition);
-  }, [cameraPosition]);
+  }, [cameraPosition, camera.position]);
 
   useEffect(() => {
     const points = [];
@@ -51,7 +50,7 @@ const Line = ({
     }
 
     setPoints(points);
-  }, []);
+  }, [lineChart, scene]);
 
   return (
     <>
@@ -108,7 +107,6 @@ const Line = ({
                   style={{
                     color: "black",
                     fontSize: `${fontSize}rem`,
-                    width: "50px",
                     width: "100%",
                     minWidth: "300px",
                     transform: "translate(0, -200%)",

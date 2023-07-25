@@ -1,16 +1,16 @@
 import React from "react";
 
 const SideBar = ({
-  showVertices,
-  onShowVertices,
   fontSize,
-  onFontSizeChange,
-  type,
   lineChart,
-  pieChart,
   onAlignAxis,
-  showAxisLabel,
+  onFontSizeChange,
   onShowAxisLabel,
+  onShowVertices,
+  pieChart,
+  showAxisLabel,
+  showVertices,
+  type,
 }) => {
   const total = pieChart.values.reduce((a, b) => (a += b.value), 0);
 

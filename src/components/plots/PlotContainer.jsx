@@ -1,9 +1,13 @@
-import { Canvas, useThree } from "@react-three/fiber";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { Canvas } from "@react-three/fiber";
 import { Link, useParams } from "react-router-dom";
-import Line from "./Line";
-import React, { useEffect, useState } from "react";
-import SideBar from "./SideBar";
 import queryString from "query-string";
+import React, { useCallback, useEffect, useState } from "react";
+
+import Line from "./Line";
+import Pie from "../plots/Pie";
+import SideBar from "./SideBar";
+
 import {
   getLineChart,
   initialData as lineChartInitialData,
@@ -12,31 +16,29 @@ import {
   getPieChart,
   initialData as pieChartInitialData,
 } from "../../services/pie-chart";
-import Pie from "../plots/Pie";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const PlotContainer = () => {
+  const [cameraPosition, setCameraPosition] = useState([5, 6, 10]);
   const [fontSize, setFontSize] = useState(1.4);
-  const [showVertices, setShowVertices] = useState(true);
-  const { id } = useParams();
   const [lineChart, setLineChart] = useState(lineChartInitialData);
   const [pieChart, setPieChart] = useState(pieChartInitialData);
-  const { type } = queryString.parse(window.location.search);
   const [showAxisLabel, setShowAxisLabels] = useState(false);
-  const [cameraPosition, setCameraPosition] = useState([5, 6, 10]);
+  const [showVertices, setShowVertices] = useState(true);
+  const { id } = useParams();
+  const { type } = queryString.parse(window.location.search);
 
   const handleAlignAxis = (e) => {
     const value = e.target.value;
     if (!value) return;
-    if (value === "X") setCameraPosition([15, 0, 0]);
-    if (value === "Y") setCameraPosition([0, 15, 0]);
-    if (value === "Z") setCameraPosition([0, 0, 15]);
     if (value === "-X") setCameraPosition([-15, 0, 0]);
     if (value === "-Y") setCameraPosition([0, -15, 0]);
     if (value === "-Z") setCameraPosition([0, 0, -15]);
+    if (value === "X") setCameraPosition([15, 0, 0]);
+    if (value === "Y") setCameraPosition([0, 15, 0]);
+    if (value === "Z") setCameraPosition([0, 0, 15]);
   };
 
-  const fetchLineChart = async () => {
+  const fetchLineChart = useCallback(async () => {
     try {
       const { data: chart } = await getLineChart(id);
       setLineChart(chart);
@@ -44,22 +46,22 @@ const PlotContainer = () => {
     } catch (error) {
       window.location = "/not-found";
     }
-  };
+  }, [id]);
 
-  const fetchPieChart = async () => {
+  const fetchPieChart = useCallback(async () => {
     try {
       const { data: chart } = await getPieChart(id);
       setPieChart(chart);
     } catch (error) {
       window.location = "/not-found";
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     if (type === "line") fetchLineChart();
     else if (type === "pie") fetchPieChart();
     else window.location = "/not-found";
-  }, []);
+  }, [fetchLineChart, fetchPieChart, type]);
 
   const handleShowVertices = (event) => {
     setShowVertices(event.target.checked);
@@ -98,10 +100,10 @@ const PlotContainer = () => {
         <Canvas camera={{ position: cameraPosition }}>
           {type === "line" && (
             <Line
-              showAxisLabel={showAxisLabel}
               cameraPosition={cameraPosition}
-              lineChart={lineChart}
               fontSize={fontSize}
+              lineChart={lineChart}
+              showAxisLabel={showAxisLabel}
               showVertices={showVertices}
             />
           )}
@@ -115,17 +117,17 @@ const PlotContainer = () => {
           )}
         </Canvas>
         <SideBar
-          type={type}
-          pieChart={pieChart}
-          lineChart={lineChart}
           fontSize={fontSize}
-          onFontSizeChange={handleFontSize}
-          onShowVertices={handleShowVertices}
-          showVertices={showVertices}
-          onCaptureImage={handleCaptureImage}
+          lineChart={lineChart}
           onAlignAxis={handleAlignAxis}
-          showAxisLabel={showAxisLabel}
+          onCaptureImage={handleCaptureImage}
+          onFontSizeChange={handleFontSize}
           onShowAxisLabel={handleShowAxisLabel}
+          onShowVertices={handleShowVertices}
+          pieChart={pieChart}
+          showAxisLabel={showAxisLabel}
+          showVertices={showVertices}
+          type={type}
         />
       </section>
     </>

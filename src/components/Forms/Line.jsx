@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import Joi from "joi-browser";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { handleCreateVertices, verticesToString } from "../../services/utils";
 import Input from "../common/Input";
@@ -10,22 +12,20 @@ import {
   initialData,
   updateLineChart,
 } from "../../services/line-chart";
-import { toast } from "react-toastify";
-import Joi from "joi-browser";
 
 const lineValidationSchema = {
-  label: Joi.string().required().max(55).label("Label"),
   color: Joi.string().required().max(55).label("Color"),
+  label: Joi.string().required().max(55).label("Label"),
   vertices: Joi.string().required().max(5000).label("Vertices"),
 };
 
 const schema = {
-  name: Joi.string().max(55).required().label("Name"),
   description: Joi.string().allow("").max(155).label("Description"),
   labelX: Joi.string().allow("").max(5000).label("X-Axis Label"),
   labelY: Joi.string().allow("").max(5000).label("Y-Axis Label"),
   labelZ: Joi.string().allow("").max(5000).label("Z-Axis Label"),
   lines: Joi.array().items(lineValidationSchema).required().label("Lines"),
+  name: Joi.string().max(55).required().label("Name"),
 };
 
 const Line = () => {
@@ -33,27 +33,30 @@ const Line = () => {
   const [numberOfLines, setNumberOfLines] = useState(1);
   const {
     data,
-    setData,
     errors,
-    setErrors,
-    handleChange,
     handleArrayChange,
+    handleChange,
+    setData,
+    setErrors,
     validate,
   } = useForm(initialData, schema);
 
-  const fetchLineChart = async (id) => {
-    try {
-      const { data: chart } = await getLineChart(id);
-      setData(chart);
-      setNumberOfLines(chart.lines.length);
-    } catch (error) {
-      toast.error("The Chart ID is not valid");
-    }
-  };
+  const fetchLineChart = useCallback(
+    async (id) => {
+      try {
+        const { data: chart } = await getLineChart(id);
+        setData(chart);
+        setNumberOfLines(chart.lines.length);
+      } catch (error) {
+        toast.error("The Chart ID is not valid");
+      }
+    },
+    [setData]
+  );
 
   useEffect(() => {
     if (id !== "new") fetchLineChart(id);
-  }, []);
+  }, [fetchLineChart, id]);
 
   const addLine = () => {
     for (let i = 0; i < data.lines.length; i++) handleCreateVertices(i);

@@ -1,7 +1,8 @@
-import { useThree, extend } from "@react-three/fiber";
-import React from "react";
-import * as THREE from "three";
 import { OrbitControls } from "@react-three/drei";
+import { useThree, extend } from "@react-three/fiber";
+import * as THREE from "three";
+import React from "react";
+
 import Axis from "../axes/Axis";
 
 extend({ OrbitControls });

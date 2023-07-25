@@ -18,6 +18,7 @@ const Input = ({
         onChange={onChange}
         className="input-primary"
         value={value}
+        {...data}
       />
       {error && <span className="input-error">{error}</span>}
     </div>

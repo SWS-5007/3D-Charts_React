@@ -3,10 +3,10 @@ import * as THREE from "three";
 import React from "react";
 
 const ClosedCylinder = ({
-  thetaStart = 0,
-  thetaLength = 0,
-  height = 1,
   color = "white",
+  height = 1,
+  thetaLength = 0,
+  thetaStart = 0,
 }) => {
   const { scene } = useThree();
   const radius = 4;

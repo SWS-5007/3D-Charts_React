@@ -1,5 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import React from "react";
 
 const Navbar = () => {
   return (
@@ -26,6 +26,9 @@ const Navbar = () => {
         </svg>
       </Link>
       <ul className="nav-items">
+        <li className="nav-item">
+          <Link to="/">Home</Link>
+        </li>
         <li className="nav-item">
           <Link to="/plots">Your Graphs</Link>
         </li>

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { FiDelete } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
+import { LuEdit2 } from "react-icons/lu";
+import React, { useEffect, useState } from "react";
 
 import { deletePieChart, getPieCharts } from "../services/pie-chart";
-import { FiDelete } from "react-icons/fi";
-import { LuEdit2 } from "react-icons/lu";
 import {
   deleteLineChart,
   getLineCharts,

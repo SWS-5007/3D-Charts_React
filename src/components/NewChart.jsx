@@ -1,5 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import React from "react";
 
 const NewChart = () => {
   return (
@@ -96,12 +96,12 @@ const NewChart = () => {
         </div>
       </div>
 
-      <p className="footer-text">
+      {/* <p className="footer-text">
         Don't know how to get started?{" "}
         <a href="#" className="link-primary">
           Click here
         </a>
-      </p>
+      </p> */}
     </section>
   );
 };
