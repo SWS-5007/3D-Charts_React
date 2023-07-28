@@ -47,8 +47,6 @@ const Line = () => {
         const { data: chart } = await getLineChart(id);
         setData(chart);
         setNumberOfLines(chart.lines.length);
-
-        setErrors({ lines: Array(chart.lines.length).fill({}) });
       } catch (error) {
         toast.error("The Chart ID is not valid");
       }
@@ -64,12 +62,8 @@ const Line = () => {
     for (let i = 0; i < data.lines.length; i++) handleCreateVertices(i);
 
     const copiedData = { ...data };
-    copiedData.lines.push({ label: "", color: "#000000", vertices: [] });
+    copiedData.lines.push({ label: "", color: "#000", vertices: [] });
     setData(copiedData);
-
-    const copiedErrors = { ...errors };
-    copiedErrors.lines.push({});
-    setErrors(copiedErrors);
 
     setNumberOfLines((numberOfLines) => numberOfLines + 1);
   };
@@ -77,20 +71,21 @@ const Line = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = validate();
+    const lineChart = { ...data };
+    const id = lineChart._id;
+
+    delete lineChart._id;
+    delete lineChart.__v;
+
+    const errors = validate(lineChart);
     setErrors(errors || {});
     for (let error in errors) {
       toast.error(`${error}: ${errors[error]}`);
     }
     if (errors) return;
 
-    const lineChart = { ...data };
-    const id = lineChart._id;
-
     try {
       if (id) {
-        delete lineChart._id;
-        delete lineChart.__v;
         await updateLineChart(id, lineChart);
         window.location = "/plot/" + id + "/?type=line";
       } else {
@@ -200,11 +195,7 @@ const Line = () => {
                 placeholder="Label"
                 className="input-primary"
                 value={data["lines"][index]["label"]}
-                error={
-                  errors["lines"] &&
-                  errors["lines"][index] &&
-                  errors["lines"][index]["label"]
-                }
+                error={errors["lines"] && errors["lines"][index]["label"]}
               />
 
               <div className="color-input">
@@ -243,11 +234,7 @@ const Line = () => {
                 placeholder="Vertices (x, y, z)"
                 className="input-primary input-max"
                 value={data["lines"][index]["vertices"]}
-                error={
-                  errors["lines"] &&
-                  errors["lines"][index] &&
-                  errors["lines"][index]["vertices"]
-                }
+                error={errors["vertices"] && errors["lines"][index]["vertices"]}
               />
               <p className="vertices-data">
                 {verticesToString(

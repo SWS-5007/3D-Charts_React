@@ -201,9 +201,9 @@ nav {
   display: grid;
 }
 
-.grid-1x4 {
+.grid-1x2 {
   gap: 6rem;
-  grid-template: repeat(1, 1fr) / repeat(4, 1fr);
+  grid-template: repeat(1, 1fr) / repeat(2, 1fr);
 }
 
 // Plots
@@ -298,14 +298,6 @@ input {
   outline: none;
 }
 
-.input-chart {
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.158);
-  border: none;
-  max-width: 100px;
-  padding: 0.3rem 1.2rem;
-}
-
 .input-container {
   margin: 1.8rem 0;
 }
@@ -356,6 +348,13 @@ input {
     height: 12px;
     width: 12px;
   }
+}
+
+.input-chart {
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  max-width: 100px;
+  padding: 0.3rem 1.2rem;
 }
 
 // Forms

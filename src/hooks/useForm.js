@@ -36,7 +36,7 @@ export default function useForm(initialData, schema) {
     setData(copiedData);
   };
 
-  const validate = () => {
+  const validate = (data) => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(data, schema, options);
     if (!error) return null;

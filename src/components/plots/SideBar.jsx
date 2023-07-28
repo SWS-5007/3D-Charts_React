@@ -69,25 +69,28 @@ const SideBar = ({
         </div>
       )}
 
-      <h3 className="aside-heading">Chart Settings</h3>
-
-      <div className="plot-setting">
-        <div>
-          <h4 className="text-lighter">Font Size</h4>
-          <span>Change font-size of vertices</span>
-        </div>
-        <input
-          value={fontSize}
-          onChange={(e) => onFontSizeChange(e)}
-          className="input-chart"
-          type="number"
-          name="fontSize"
-          id="fontSize"
-          min={0}
-          max={1.5}
-          step={0.05}
-        ></input>
-      </div>
+      {type === "line" && (
+        <>
+          <h3 className="aside-heading">Chart Settings</h3>
+          <div className="plot-setting">
+            <div>
+              <h4 className="text-lighter">Font Size</h4>
+              <span>Change font-size of vertices</span>
+            </div>
+            <input
+              value={fontSize}
+              onChange={(e) => onFontSizeChange(e)}
+              className="input-chart"
+              type="number"
+              name="fontSize"
+              id="fontSize"
+              min={0}
+              max={1.5}
+              step={0.05}
+            ></input>
+          </div>
+        </>
+      )}
 
       <h3 className="aside-heading">Chart Data</h3>
 

@@ -12,6 +12,7 @@ const Input = ({
   return (
     <div className="input-container">
       <input
+        autoComplete="off"
         name={name}
         placeholder={placeholder}
         type={type}

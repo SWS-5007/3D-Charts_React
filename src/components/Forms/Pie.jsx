@@ -47,6 +47,7 @@ const Pie = () => {
       delete chart.__v;
       setData(chart);
       setValuesCount(chart.values.length);
+      setErrors({ values: Array(chart.lines.length).fill({}) });
     } catch (error) {
       toast.error("Chart with given ID was not found");
     }
@@ -61,6 +62,10 @@ const Pie = () => {
     data.values.push({ label: "", value: "", color: "#000000" });
     setData(copiedData);
     setValuesCount(valuesCount + 1);
+
+    const copiedErrors = { ...errors };
+    copiedErrors.values.push({});
+    setErrors(copiedErrors);
   };
 
   const handleSubmit = async (e) => {
@@ -152,7 +157,11 @@ const Pie = () => {
               name="label"
               placeholder="Label"
               className="input-primary"
-              error={errors["values"][index]["label"]}
+              error={
+                errors["values"] &&
+                errors["values"]["index"] &&
+                errors["values"][index]["label"]
+              }
             />
             <Input
               onChange={(e) =>
@@ -162,16 +171,30 @@ const Pie = () => {
               name="value"
               placeholder="Value"
               className="input-primary"
-              error={errors["values"][index]["value"]}
+              error={
+                errors["values"] &&
+                errors["values"]["index"] &&
+                errors["values"][index]["value"]
+              }
             />
 
             <div className="color-input">
               <div className="color-container">
-                <span className="color" />
+                <span
+                  style={{ backgroundColor: data.values[index].color }}
+                  className="color"
+                />
               </div>
-              <Input
+              <input
                 type={"color"}
-                onChange={(e) => handleArrayChange("values", index, e)}
+                onChange={(e) =>
+                  handleArrayChange(
+                    "values",
+                    index,
+                    e,
+                    pieValueValidationSchema
+                  )
+                }
                 value={data.values[index]["color"]}
                 name="color"
                 placeholder="Color"
@@ -183,7 +206,7 @@ const Pie = () => {
 
       <div className="form-content">
         <button type="button" onClick={handleValuesCount} className="btn-dark">
-          Add
+          Add New
         </button>
       </div>
     </form>
