@@ -2,8 +2,6 @@
 
 ## Introduction
 
-![3D App Visualizer](https://github.com/vijayverma2003/3d-charts/tree/main/public/app.png)
-
 Introducing the 3D Charts Visualizer app, your ultimate interactive tool for learning 3D charts especially line charts!
 Create your own 3D charts, interact with the data from different angles in an immersive experience. This app is made using
 MERN stack. It also uses **three.js** for rendering 3D graphs.
